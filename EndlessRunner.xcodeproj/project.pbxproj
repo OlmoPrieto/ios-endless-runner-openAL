@@ -1,0 +1,452 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		245C8E881BBE6FB10019BDC6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 245C8E871BBE6FB10019BDC6 /* main.m */; };
+		245C8E8B1BBE6FB10019BDC6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 245C8E8A1BBE6FB10019BDC6 /* AppDelegate.m */; };
+		245C8E8D1BBE6FB10019BDC6 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 245C8E8C1BBE6FB10019BDC6 /* Shader.fsh */; };
+		245C8E8F1BBE6FB10019BDC6 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 245C8E8E1BBE6FB10019BDC6 /* Shader.vsh */; };
+		245C8E921BBE6FB10019BDC6 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 245C8E911BBE6FB10019BDC6 /* GameViewController.m */; };
+		245C8E951BBE6FB10019BDC6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 245C8E931BBE6FB10019BDC6 /* Main.storyboard */; };
+		245C8E971BBE6FB10019BDC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 245C8E961BBE6FB10019BDC6 /* Assets.xcassets */; };
+		245C8E9A1BBE6FB10019BDC6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 245C8E981BBE6FB10019BDC6 /* LaunchScreen.storyboard */; };
+		245C8EA51BBE6FB10019BDC6 /* EndlessRunnerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 245C8EA41BBE6FB10019BDC6 /* EndlessRunnerTests.m */; };
+		245C8EB01BBE77680019BDC6 /* GameWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 245C8EAF1BBE77680019BDC6 /* GameWrapper.mm */; settings = {ASSET_TAGS = (); }; };
+		245C8EB41BBE803E0019BDC6 /* game.cc in Sources */ = {isa = PBXBuildFile; fileRef = 245C8EB21BBE803E0019BDC6 /* game.cc */; settings = {ASSET_TAGS = (); }; };
+		245C8EB71BBE86B40019BDC6 /* utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 245C8EB61BBE86B40019BDC6 /* utils.mm */; settings = {ASSET_TAGS = (); }; };
+		245C8EBA1BBE89E20019BDC6 /* support.mm in Sources */ = {isa = PBXBuildFile; fileRef = 245C8EB91BBE89E20019BDC6 /* support.mm */; settings = {ASSET_TAGS = (); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		245C8EA11BBE6FB10019BDC6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 245C8E7B1BBE6FB10019BDC6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 245C8E821BBE6FB10019BDC6;
+			remoteInfo = EndlessRunner;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		245C8E831BBE6FB10019BDC6 /* EndlessRunner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EndlessRunner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		245C8E871BBE6FB10019BDC6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		245C8E891BBE6FB10019BDC6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		245C8E8A1BBE6FB10019BDC6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		245C8E8C1BBE6FB10019BDC6 /* Shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.fsh; path = Shaders/Shader.fsh; sourceTree = "<group>"; };
+		245C8E8E1BBE6FB10019BDC6 /* Shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.vsh; path = Shaders/Shader.vsh; sourceTree = "<group>"; };
+		245C8E901BBE6FB10019BDC6 /* GameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
+		245C8E911BBE6FB10019BDC6 /* GameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
+		245C8E941BBE6FB10019BDC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		245C8E961BBE6FB10019BDC6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		245C8E991BBE6FB10019BDC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		245C8E9B1BBE6FB10019BDC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		245C8EA01BBE6FB10019BDC6 /* EndlessRunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EndlessRunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		245C8EA41BBE6FB10019BDC6 /* EndlessRunnerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EndlessRunnerTests.m; sourceTree = "<group>"; };
+		245C8EA61BBE6FB10019BDC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		245C8EAF1BBE77680019BDC6 /* GameWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameWrapper.mm; sourceTree = "<group>"; };
+		245C8EB11BBE77A20019BDC6 /* GameWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameWrapper.h; sourceTree = "<group>"; };
+		245C8EB21BBE803E0019BDC6 /* game.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = game.cc; sourceTree = "<group>"; };
+		245C8EB31BBE803E0019BDC6 /* game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = game.h; sourceTree = "<group>"; };
+		245C8EB51BBE855D0019BDC6 /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
+		245C8EB61BBE86B40019BDC6 /* utils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = utils.mm; sourceTree = "<group>"; };
+		245C8EB81BBE88AE0019BDC6 /* support.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = support.h; sourceTree = "<group>"; };
+		245C8EB91BBE89E20019BDC6 /* support.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = support.mm; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		245C8E801BBE6FB10019BDC6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		245C8E9D1BBE6FB10019BDC6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		245C8E7A1BBE6FB10019BDC6 = {
+			isa = PBXGroup;
+			children = (
+				245C8E851BBE6FB10019BDC6 /* EndlessRunner */,
+				245C8EA31BBE6FB10019BDC6 /* EndlessRunnerTests */,
+				245C8E841BBE6FB10019BDC6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		245C8E841BBE6FB10019BDC6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				245C8E831BBE6FB10019BDC6 /* EndlessRunner.app */,
+				245C8EA01BBE6FB10019BDC6 /* EndlessRunnerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		245C8E851BBE6FB10019BDC6 /* EndlessRunner */ = {
+			isa = PBXGroup;
+			children = (
+				245C8E891BBE6FB10019BDC6 /* AppDelegate.h */,
+				245C8E8A1BBE6FB10019BDC6 /* AppDelegate.m */,
+				245C8E8C1BBE6FB10019BDC6 /* Shader.fsh */,
+				245C8E8E1BBE6FB10019BDC6 /* Shader.vsh */,
+				245C8E901BBE6FB10019BDC6 /* GameViewController.h */,
+				245C8E911BBE6FB10019BDC6 /* GameViewController.m */,
+				245C8E931BBE6FB10019BDC6 /* Main.storyboard */,
+				245C8E961BBE6FB10019BDC6 /* Assets.xcassets */,
+				245C8E981BBE6FB10019BDC6 /* LaunchScreen.storyboard */,
+				245C8E9B1BBE6FB10019BDC6 /* Info.plist */,
+				245C8E861BBE6FB10019BDC6 /* Supporting Files */,
+				245C8EAF1BBE77680019BDC6 /* GameWrapper.mm */,
+				245C8EB11BBE77A20019BDC6 /* GameWrapper.h */,
+				245C8EB21BBE803E0019BDC6 /* game.cc */,
+				245C8EB31BBE803E0019BDC6 /* game.h */,
+				245C8EB51BBE855D0019BDC6 /* utils.h */,
+				245C8EB61BBE86B40019BDC6 /* utils.mm */,
+				245C8EB81BBE88AE0019BDC6 /* support.h */,
+				245C8EB91BBE89E20019BDC6 /* support.mm */,
+			);
+			path = EndlessRunner;
+			sourceTree = "<group>";
+		};
+		245C8E861BBE6FB10019BDC6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				245C8E871BBE6FB10019BDC6 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		245C8EA31BBE6FB10019BDC6 /* EndlessRunnerTests */ = {
+			isa = PBXGroup;
+			children = (
+				245C8EA41BBE6FB10019BDC6 /* EndlessRunnerTests.m */,
+				245C8EA61BBE6FB10019BDC6 /* Info.plist */,
+			);
+			path = EndlessRunnerTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		245C8E821BBE6FB10019BDC6 /* EndlessRunner */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 245C8EA91BBE6FB10019BDC6 /* Build configuration list for PBXNativeTarget "EndlessRunner" */;
+			buildPhases = (
+				245C8E7F1BBE6FB10019BDC6 /* Sources */,
+				245C8E801BBE6FB10019BDC6 /* Frameworks */,
+				245C8E811BBE6FB10019BDC6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EndlessRunner;
+			productName = EndlessRunner;
+			productReference = 245C8E831BBE6FB10019BDC6 /* EndlessRunner.app */;
+			productType = "com.apple.product-type.application";
+		};
+		245C8E9F1BBE6FB10019BDC6 /* EndlessRunnerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 245C8EAC1BBE6FB10019BDC6 /* Build configuration list for PBXNativeTarget "EndlessRunnerTests" */;
+			buildPhases = (
+				245C8E9C1BBE6FB10019BDC6 /* Sources */,
+				245C8E9D1BBE6FB10019BDC6 /* Frameworks */,
+				245C8E9E1BBE6FB10019BDC6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				245C8EA21BBE6FB10019BDC6 /* PBXTargetDependency */,
+			);
+			name = EndlessRunnerTests;
+			productName = EndlessRunnerTests;
+			productReference = 245C8EA01BBE6FB10019BDC6 /* EndlessRunnerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		245C8E7B1BBE6FB10019BDC6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = ESAT;
+				TargetAttributes = {
+					245C8E821BBE6FB10019BDC6 = {
+						CreatedOnToolsVersion = 7.0;
+					};
+					245C8E9F1BBE6FB10019BDC6 = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = 245C8E821BBE6FB10019BDC6;
+					};
+				};
+			};
+			buildConfigurationList = 245C8E7E1BBE6FB10019BDC6 /* Build configuration list for PBXProject "EndlessRunner" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 245C8E7A1BBE6FB10019BDC6;
+			productRefGroup = 245C8E841BBE6FB10019BDC6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				245C8E821BBE6FB10019BDC6 /* EndlessRunner */,
+				245C8E9F1BBE6FB10019BDC6 /* EndlessRunnerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		245C8E811BBE6FB10019BDC6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				245C8E951BBE6FB10019BDC6 /* Main.storyboard in Resources */,
+				245C8E8F1BBE6FB10019BDC6 /* Shader.vsh in Resources */,
+				245C8E971BBE6FB10019BDC6 /* Assets.xcassets in Resources */,
+				245C8E9A1BBE6FB10019BDC6 /* LaunchScreen.storyboard in Resources */,
+				245C8E8D1BBE6FB10019BDC6 /* Shader.fsh in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		245C8E9E1BBE6FB10019BDC6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		245C8E7F1BBE6FB10019BDC6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				245C8E8B1BBE6FB10019BDC6 /* AppDelegate.m in Sources */,
+				245C8E921BBE6FB10019BDC6 /* GameViewController.m in Sources */,
+				245C8E881BBE6FB10019BDC6 /* main.m in Sources */,
+				245C8EBA1BBE89E20019BDC6 /* support.mm in Sources */,
+				245C8EB71BBE86B40019BDC6 /* utils.mm in Sources */,
+				245C8EB41BBE803E0019BDC6 /* game.cc in Sources */,
+				245C8EB01BBE77680019BDC6 /* GameWrapper.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		245C8E9C1BBE6FB10019BDC6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				245C8EA51BBE6FB10019BDC6 /* EndlessRunnerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		245C8EA21BBE6FB10019BDC6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 245C8E821BBE6FB10019BDC6 /* EndlessRunner */;
+			targetProxy = 245C8EA11BBE6FB10019BDC6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		245C8E931BBE6FB10019BDC6 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				245C8E941BBE6FB10019BDC6 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		245C8E981BBE6FB10019BDC6 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				245C8E991BBE6FB10019BDC6 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		245C8EA71BBE6FB10019BDC6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		245C8EA81BBE6FB10019BDC6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		245C8EAA1BBE6FB10019BDC6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = EndlessRunner/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.esat.EndlessRunner;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		245C8EAB1BBE6FB10019BDC6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = EndlessRunner/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.esat.EndlessRunner;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		245C8EAD1BBE6FB10019BDC6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				INFOPLIST_FILE = EndlessRunnerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.esat.EndlessRunnerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EndlessRunner.app/EndlessRunner";
+			};
+			name = Debug;
+		};
+		245C8EAE1BBE6FB10019BDC6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = EndlessRunnerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.esat.EndlessRunnerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EndlessRunner.app/EndlessRunner";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		245C8E7E1BBE6FB10019BDC6 /* Build configuration list for PBXProject "EndlessRunner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				245C8EA71BBE6FB10019BDC6 /* Debug */,
+				245C8EA81BBE6FB10019BDC6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		245C8EA91BBE6FB10019BDC6 /* Build configuration list for PBXNativeTarget "EndlessRunner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				245C8EAA1BBE6FB10019BDC6 /* Debug */,
+				245C8EAB1BBE6FB10019BDC6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		245C8EAC1BBE6FB10019BDC6 /* Build configuration list for PBXNativeTarget "EndlessRunnerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				245C8EAD1BBE6FB10019BDC6 /* Debug */,
+				245C8EAE1BBE6FB10019BDC6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 245C8E7B1BBE6FB10019BDC6 /* Project object */;
+}
