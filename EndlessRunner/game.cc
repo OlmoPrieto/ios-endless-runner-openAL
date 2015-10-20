@@ -60,7 +60,20 @@ void Game::initialize(int width, int height) {
 	width_ = width;
 	height_ = height;
 	utils::LogInfo("EndlessRunner", "Game::initialize(%d, %d)", width_, height_);
+    
+    // Screen variables
+    
+    
+    // Initialize map variables
+    floor_height_ = 50.0f;
+    floor_width_ = 800.0f; // Hardcode now -> next, get screen width
+    floor_x_pos_ = 0.0f;
+    floor_y_pos_ = 0.0f + floor_height_;
 	
+    floor_one_x_position_ = floor_x_pos_;
+    floor_two_x_position_ = floor_one_x_position_ + floor_width_;
+
+    
 	// reset timer
 	secs_last_update_ = 0.0;
 }
@@ -104,10 +117,32 @@ void Game::render() {
 	
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClear(GL_DEPTH_BUFFER_BIT);
+    
+    glUseProgram(program_handle_);
+    
+    
+    // Dirty Floor Movement
+    
+    floor_one_x_position_ -= 5.0f;
+    floor_two_x_position_ -= 5.0f;
+    
+    drawFloor(floor_one_x_position_);    // Floor 1
+    drawFloor(floor_two_x_position_);    // Floor 2
 	
-	glUseProgram(program_handle_);
-		
-	drawRectBad(200.0f, 400.0f, 100.0f, 200.0f);
+    if(floor_one_x_position_ <= (-floor_width_)){
+        floor_one_x_position_ = 0.0f + floor_width_;
+    }
+    if(floor_two_x_position_ <= (-floor_width_)){
+        floor_two_x_position_ = 0.0f + floor_width_;
+    }
+    
+    
+    
+	drawRectBad(300.0f, 400.0f, 100.0f, 200.0f);
+}
+    
+void Game::drawFloor(float pos_x){
+    drawRectBad(pos_x, floor_y_pos_, floor_width_, floor_height_);
 }
 	
 // TODO(Students) Bad implemented, reimplement!!!!

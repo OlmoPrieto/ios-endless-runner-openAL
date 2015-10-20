@@ -38,13 +38,24 @@ class Game {
 	double secs_last_update_;
 	int width_;
 	int height_;
-        
+    
+    
 	// GL ES
 	int program_handle_;
 	int attribute_position_;
 	int uniform_mvp_matrix_;
-        
-        
+    
+    // Map Variables
+    float floor_x_pos_;
+    float floor_y_pos_;
+    float floor_height_;
+    float floor_width_;
+    
+    float floor_one_x_position_;
+    float floor_two_x_position_;
+    
+    void drawFloor(float pos_x);
+    
 	// draw a rectangle
 	void drawRectBad(float x, float y, float width, float height) const;
         
