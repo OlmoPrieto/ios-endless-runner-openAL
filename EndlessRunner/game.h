@@ -38,6 +38,7 @@ class Game {
 	double secs_last_update_;
 	int width_;
 	int height_;
+    float speed_;
     
     
 	// GL ES
@@ -53,6 +54,31 @@ class Game {
     
     float floor_one_x_position_;
     float floor_two_x_position_;
+    
+    // Character variables
+    float char_x_;
+    float char_y_;
+    float char_width_;
+    float char_height_;
+    float jump_height_;
+    bool is_jumping_;
+    
+    void drawCharacter();
+    
+    // boxes
+    float box_width_;
+    float box_height_;
+    float box_speed_;
+    
+    void drawBoxes();
+    
+    // box1
+    float box1_x_;
+    float box1_y_;
+    
+    // box2
+    float box2_x_;
+    float box2_y_;
     
     void drawFloor(float pos_x);
     

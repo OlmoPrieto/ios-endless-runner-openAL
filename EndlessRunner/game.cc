@@ -72,6 +72,23 @@ void Game::initialize(int width, int height) {
 	
     floor_one_x_position_ = floor_x_pos_;
     floor_two_x_position_ = floor_one_x_position_ + floor_width_;
+    
+    char_width_ = 100.0f;
+    char_height_ = 200.0f;
+    char_x_ = 300.0f;
+    char_y_ = floor_height_ + char_height_;
+    jump_height_ = 100.0f;
+    is_jumping_ = false;
+    
+    box_width_ = 50.0f;
+    box_height_ = 50.0f;
+    box_speed_ = 50.0f;
+    
+    box1_x_ = 800.0f;
+    box1_y_ = floor_height_ + box_height_;
+    
+    box2_x_ = 900.0f;
+    box2_y_ = floor_height_ + box_height_;
 
     
 	// reset timer
@@ -108,6 +125,16 @@ void Game::update() {
 	double secs_current_time = utils::GetTimeSeconds();
 	double secs_since_last_update = secs_current_time - secs_last_update_;
 	secs_last_update_ = secs_current_time;
+    
+    box1_x_ -= box_speed_ * secs_since_last_update;
+    box2_x_ -= box_speed_ * secs_since_last_update;
+    
+    if (box1_x_ <= -box_width_) {
+        box1_x_ = 800.0f;
+    }
+    if (box2_x_ <= -box_width_) {
+        box2_x_ = 900.0f;
+    }
 }
 
 void Game::render() {
@@ -137,12 +164,22 @@ void Game::render() {
     }
     
     
-    
-	drawRectBad(300.0f, 400.0f, 100.0f, 200.0f);
+	//drawRectBad(300.0f, 400.0f, 100.0f, 200.0f);
+    drawCharacter();
+    drawBoxes();
 }
     
 void Game::drawFloor(float pos_x){
     drawRectBad(pos_x, floor_y_pos_, floor_width_, floor_height_);
+}
+
+void Game::drawCharacter() {
+    drawRectBad(char_x_, char_y_, char_width_, char_height_);
+}
+    
+void Game::drawBoxes() {
+    drawRectBad(box1_x_, box1_y_, box_width_, box_height_);
+    drawRectBad(box2_x_, box2_y_, box_width_, box_height_);
 }
 	
 // TODO(Students) Bad implemented, reimplement!!!!
