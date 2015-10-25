@@ -28,7 +28,7 @@ class Object {
     float width() const;
     float height() const;
     
-  private:
+  protected:
     float x_;
     float y_;
     float width_;
