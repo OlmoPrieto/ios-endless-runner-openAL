@@ -20,12 +20,9 @@
 		245C8EB41BBE803E0019BDC6 /* game.cc in Sources */ = {isa = PBXBuildFile; fileRef = 245C8EB21BBE803E0019BDC6 /* game.cc */; settings = {ASSET_TAGS = (); }; };
 		245C8EB71BBE86B40019BDC6 /* utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 245C8EB61BBE86B40019BDC6 /* utils.mm */; settings = {ASSET_TAGS = (); }; };
 		245C8EBA1BBE89E20019BDC6 /* support.mm in Sources */ = {isa = PBXBuildFile; fileRef = 245C8EB91BBE89E20019BDC6 /* support.mm */; settings = {ASSET_TAGS = (); }; };
-<<<<<<< HEAD
-		82E9815C1BDD5545009BB100 /* player.cc in Sources */ = {isa = PBXBuildFile; fileRef = 82E9815A1BDD5545009BB100 /* player.cc */; settings = {ASSET_TAGS = (); }; };
-=======
-		F519DCD61BDD685C005BA73C /* obstacle.cc in Sources */ = {isa = PBXBuildFile; fileRef = F519DCD51BDD685C005BA73C /* obstacle.cc */; settings = {ASSET_TAGS = (); }; };
->>>>>>> 8ff13808bdd4a347ba3bf965afaf4166f9a4c012
-		F5770DDB1BD8075F00723109 /* object.cc in Sources */ = {isa = PBXBuildFile; fileRef = F5770DDA1BD8075F00723109 /* object.cc */; settings = {ASSET_TAGS = (); }; };
+		8226FDB61BDD749200913384 /* object.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8226FDB01BDD749200913384 /* object.cc */; settings = {ASSET_TAGS = (); }; };
+		8226FDB71BDD749200913384 /* obstacle.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8226FDB21BDD749200913384 /* obstacle.cc */; settings = {ASSET_TAGS = (); }; };
+		8226FDB81BDD749200913384 /* player.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8226FDB41BDD749200913384 /* player.cc */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,15 +59,12 @@
 		245C8EB61BBE86B40019BDC6 /* utils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = utils.mm; sourceTree = "<group>"; };
 		245C8EB81BBE88AE0019BDC6 /* support.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = support.h; sourceTree = "<group>"; };
 		245C8EB91BBE89E20019BDC6 /* support.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = support.mm; sourceTree = "<group>"; };
-<<<<<<< HEAD
-		82E9815A1BDD5545009BB100 /* player.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = player.cc; sourceTree = "<group>"; };
-		82E9815B1BDD5545009BB100 /* player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = player.h; sourceTree = "<group>"; };
-=======
-		F519DCD41BDD67CF005BA73C /* obstacle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = obstacle.h; sourceTree = "<group>"; };
-		F519DCD51BDD685C005BA73C /* obstacle.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = obstacle.cc; sourceTree = "<group>"; };
->>>>>>> 8ff13808bdd4a347ba3bf965afaf4166f9a4c012
-		F5770DD91BD8055500723109 /* object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = object.h; sourceTree = "<group>"; };
-		F5770DDA1BD8075F00723109 /* object.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = object.cc; sourceTree = "<group>"; };
+		8226FDB01BDD749200913384 /* object.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = object.cc; path = EndlessRunner/object.cc; sourceTree = "<group>"; };
+		8226FDB11BDD749200913384 /* object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = object.h; path = EndlessRunner/object.h; sourceTree = "<group>"; };
+		8226FDB21BDD749200913384 /* obstacle.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = obstacle.cc; path = EndlessRunner/obstacle.cc; sourceTree = "<group>"; };
+		8226FDB31BDD749200913384 /* obstacle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = obstacle.h; path = EndlessRunner/obstacle.h; sourceTree = "<group>"; };
+		8226FDB41BDD749200913384 /* player.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = player.cc; path = EndlessRunner/player.cc; sourceTree = "<group>"; };
+		8226FDB51BDD749200913384 /* player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = player.h; path = EndlessRunner/player.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +88,12 @@
 		245C8E7A1BBE6FB10019BDC6 = {
 			isa = PBXGroup;
 			children = (
+				8226FDB01BDD749200913384 /* object.cc */,
+				8226FDB11BDD749200913384 /* object.h */,
+				8226FDB21BDD749200913384 /* obstacle.cc */,
+				8226FDB31BDD749200913384 /* obstacle.h */,
+				8226FDB41BDD749200913384 /* player.cc */,
+				8226FDB51BDD749200913384 /* player.h */,
 				245C8E851BBE6FB10019BDC6 /* EndlessRunner */,
 				245C8EA31BBE6FB10019BDC6 /* EndlessRunnerTests */,
 				245C8E841BBE6FB10019BDC6 /* Products */,
@@ -131,15 +131,6 @@
 				245C8EB61BBE86B40019BDC6 /* utils.mm */,
 				245C8EB81BBE88AE0019BDC6 /* support.h */,
 				245C8EB91BBE89E20019BDC6 /* support.mm */,
-				F5770DD91BD8055500723109 /* object.h */,
-				F5770DDA1BD8075F00723109 /* object.cc */,
-<<<<<<< HEAD
-				82E9815A1BDD5545009BB100 /* player.cc */,
-				82E9815B1BDD5545009BB100 /* player.h */,
-=======
-				F519DCD41BDD67CF005BA73C /* obstacle.h */,
-				F519DCD51BDD685C005BA73C /* obstacle.cc */,
->>>>>>> 8ff13808bdd4a347ba3bf965afaf4166f9a4c012
 			);
 			path = EndlessRunner;
 			sourceTree = "<group>";
@@ -264,12 +255,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				245C8E8B1BBE6FB10019BDC6 /* AppDelegate.m in Sources */,
+				8226FDB71BDD749200913384 /* obstacle.cc in Sources */,
 				245C8E921BBE6FB10019BDC6 /* GameViewController.m in Sources */,
-				82E9815C1BDD5545009BB100 /* player.cc in Sources */,
-				F5770DDB1BD8075F00723109 /* object.cc in Sources */,
-				F519DCD61BDD685C005BA73C /* obstacle.cc in Sources */,
 				245C8E881BBE6FB10019BDC6 /* main.m in Sources */,
+				8226FDB81BDD749200913384 /* player.cc in Sources */,
 				245C8EBA1BBE89E20019BDC6 /* support.mm in Sources */,
+				8226FDB61BDD749200913384 /* object.cc in Sources */,
 				245C8EB71BBE86B40019BDC6 /* utils.mm in Sources */,
 				245C8EB41BBE803E0019BDC6 /* game.cc in Sources */,
 				245C8EB01BBE77680019BDC6 /* GameWrapper.mm in Sources */,

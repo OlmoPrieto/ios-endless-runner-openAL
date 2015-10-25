@@ -27,7 +27,7 @@ class Object {
     float y() const;
     float width() const;
     float height() const;
-<<<<<<< HEAD
+
   
   void update();
   void draw();
@@ -36,11 +36,9 @@ class Object {
   void is_grounded(bool grounded);
   bool grounded()const;
   
-  private:
-=======
     
   protected:
->>>>>>> 8ff13808bdd4a347ba3bf965afaf4166f9a4c012
+
     float x_;
     float y_;
     float width_;
