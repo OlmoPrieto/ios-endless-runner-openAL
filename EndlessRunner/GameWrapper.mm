@@ -58,6 +58,10 @@
     ((endlessrunner::Game*)_game)->touchUpAt(x, y);
 }
 
+-(void)screenTouched{
+  ((endlessrunner::Game*)_game)->screenTouched();
+}
+
 
 - (void)pause
 {

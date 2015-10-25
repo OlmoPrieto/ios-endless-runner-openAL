@@ -61,34 +61,34 @@ void Game::initialize(int width, int height) {
 	height_ = height;
 	utils::LogInfo("EndlessRunner", "Game::initialize(%d, %d)", width_, height_);
     
-    // Screen variables
-    
-    
-    // Initialize map variables
-    floor_height_ = 50.0f;
-    floor_width_ = 1000.0f; // Hardcode now -> next, get screen width
-    floor_x_pos_ = 0.0f;
-    floor_y_pos_ = 0.0f + floor_height_;
+  // Screen variables
+  
+  // Initialize map variables
+  floor_height_ = 50.0f;
+  floor_width_ = 1000.0f; // Hardcode now -> next, get screen width
+  floor_x_pos_ = 0.0f;
+  floor_y_pos_ = 0.0f + floor_height_;
 	
-    floor_one_x_position_ = floor_x_pos_;
-    floor_two_x_position_ = floor_one_x_position_ + floor_width_;
+  floor_one_x_position_ = floor_x_pos_;
+  floor_two_x_position_ = floor_one_x_position_ + floor_width_;
+
+  
+  player.set_width(100.0f);
+  player.set_height(200.0f);
+  player.set_position(100.0f, floor_height_ + player.height() + 100.0f);
+  player.isAffectedByGravity(true);
+  player.is_grounded(false);
+  
+  
+  box_width_ = 50.0f;
+  box_height_ = 50.0f;
+  box_speed_ = 50.0f;
     
-    char_width_ = 100.0f;
-    char_height_ = 200.0f;
-    char_x_ = 300.0f;
-    char_y_ = floor_height_ + char_height_;
-    jump_height_ = 100.0f;
-    is_jumping_ = false;
+  box1_x_ = 800.0f;
+  box1_y_ = floor_height_ + box_height_;
     
-    box_width_ = 50.0f;
-    box_height_ = 50.0f;
-    box_speed_ = 50.0f;
-    
-    box1_x_ = 800.0f;
-    box1_y_ = floor_height_ + box_height_;
-    
-    box2_x_ = 900.0f;
-    box2_y_ = floor_height_ + box_height_;
+  box2_x_ = 900.0f;
+  box2_y_ = floor_height_ + box_height_;
 
     
 	// reset timer
@@ -96,10 +96,14 @@ void Game::initialize(int width, int height) {
 }
 
 void Game::touchDownAt(float x, float y) {
-	
+
 }
 	
 void Game::touchUpAt(float x, float y) {
+}
+  
+void Game::screenTouched(){
+  player.jump();
 }
 
 void Game::pause() {
@@ -115,6 +119,8 @@ void Game::resume() {
 
 void Game::update() {
 	if (is_paused_ || !is_opengl_init_) return;
+  
+  
 	
 	// utils::LogInfo("EndlessRunner", "Game update.");
 	
@@ -147,7 +153,18 @@ void Game::update() {
     if (box2_x_ <= -box_width_) {
         box2_x_ = 900.0f;
     }
+  
+  
+  // Player gravity
+  if(player.y() <= floor_y_pos_ + player.height()){
+    player.is_grounded(true);
+  }
+  
+  // Update objects
+  player.update();
+  
 }
+
 
 void Game::render() {
 	if (!is_opengl_init_) return;
@@ -157,13 +174,13 @@ void Game::render() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClear(GL_DEPTH_BUFFER_BIT);
     
-    glUseProgram(program_handle_);
+  glUseProgram(program_handle_);
     
-	//drawRectBad(300.0f, 400.0f, 100.0f, 200.0f);
-    drawFloor(floor_one_x_position_);
-    drawFloor(floor_two_x_position_);
-    drawCharacter();
-    drawBoxes();
+  //drawRectBad(300.0f, 400.0f, 100.0f, 200.0f);
+  drawFloor(floor_one_x_position_);
+  drawFloor(floor_two_x_position_);
+  drawCharacter();
+  drawBoxes();
 }
     
 void Game::drawFloor(float pos_x){
@@ -173,7 +190,7 @@ void Game::drawFloor(float pos_x){
 
 void Game::drawCharacter() {
     glUniform3f(glGetUniformLocation(program_handle_, "u_color"), 0.1f, 1.0f, 0.4f);
-    drawRectBad(char_x_, char_y_, char_width_, char_height_);
+    drawRectBad(player.x(), player.y(), player.width(), player.height());
 }
     
 void Game::drawBoxes() {

@@ -27,12 +27,22 @@ class Object {
     float y() const;
     float width() const;
     float height() const;
-    
+  
+  void update();
+  void draw();
+  void doGravity();
+  void isAffectedByGravity(bool affected);
+  void is_grounded(bool grounded);
+  bool grounded()const;
+  
   private:
     float x_;
     float y_;
     float width_;
     float height_;
+  
+    float is_grounded_;
+    bool affected_by_gravity_;
 };
 
 #endif /* object_h */

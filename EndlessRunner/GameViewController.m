@@ -115,6 +115,18 @@
     [[self gameWrapper] render];
 }
 
+
+
+// Get Touches
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+  
+  for(UITouch *touch in touches) {
+    CGPoint origTouchPos = [touch locationInView: touch.view];
+    NSLog(@"TouchBegan (%u): %f %f", [touch hash], origTouchPos.x, origTouchPos.y);
+    [[self gameWrapper] screenTouched];
+  }
+}
+
 #pragma mark - AVAudioSession and AVAudioSessionDelegate delegate methods
 - (void)initAudioSession
 {

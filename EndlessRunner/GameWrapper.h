@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-
 @interface GameWrapper : NSObject
 
 - (void)setupGL;
@@ -18,6 +17,8 @@
 
 - (void)touchDownAtPosX:(float)x posY:(float)y;
 - (void)touchUpAtPosX:(float)x posY:(float)y;
+
+- (void)screenTouched;
 
 - (void)pause;
 - (void)resume;
