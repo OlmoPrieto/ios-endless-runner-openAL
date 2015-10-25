@@ -25,7 +25,7 @@ Game::Game()
 	program_handle_(0),
 	attribute_position_(0),
 	uniform_mvp_matrix_(0) {
-		utils::LogInfo("EndlessRunner", "Game::Game()");
+    utils::LogInfo("EndlessRunner", "Game::Game()");
 }
 
 Game::~Game() {
@@ -61,35 +61,32 @@ void Game::initialize(int width, int height) {
 	height_ = height;
 	utils::LogInfo("EndlessRunner", "Game::initialize(%d, %d)", width_, height_);
     
-  // Screen variables
+    // Screen variables
   
-  // Initialize map variables
-  floor_height_ = 50.0f;
-  floor_width_ = 1000.0f; // Hardcode now -> next, get screen width
-  floor_x_pos_ = 0.0f;
-  floor_y_pos_ = 0.0f + floor_height_;
+    // Initialize map variables
+    floor_height_ = 50.0f;
+    floor_width_ = 1000.0f; // Hardcode now -> next, get screen width
+    floor_x_pos_ = 0.0f;
+    floor_y_pos_ = 0.0f + floor_height_;
 	
-  floor_one_x_position_ = floor_x_pos_;
-  floor_two_x_position_ = floor_one_x_position_ + floor_width_;
+    floor_one_x_position_ = floor_x_pos_;
+    floor_two_x_position_ = floor_one_x_position_ + floor_width_;
 
   
-  player.set_width(100.0f);
-  player.set_height(200.0f);
-  player.set_position(100.0f, floor_height_ + player.height() + 100.0f);
-  player.isAffectedByGravity(true);
-  player.is_grounded(false);
-  
-  
-  box_width_ = 50.0f;
-  box_height_ = 50.0f;
-  box_speed_ = 50.0f;
-    
-  box1_x_ = 800.0f;
-  box1_y_ = floor_height_ + box_height_;
-    
-  box2_x_ = 900.0f;
-  box2_y_ = floor_height_ + box_height_;
+    player.set_width(100.0f);
+    player.set_height(200.0f);
+    player.set_position(100.0f, floor_height_ + player.height() + 100.0f);
+    player.isAffectedByGravity(true);
+    player.is_grounded(false);
 
+    max_obstacles_ = 6;
+    obstacle_pool_.reserve(max_obstacles_);
+    for (int i = 0; i < max_obstacles_; ++i) {
+        Obstacle o;
+        o.init(800.0f + i * 100.0f, floor_height_ + 100.0f, 100.0f,
+               100.0f, 75.0f);
+        obstacle_pool_.push_back(o);
+    }
     
 	// reset timer
 	secs_last_update_ = 0.0;
@@ -144,14 +141,8 @@ void Game::update() {
         floor_two_x_position_ = 0.0f + floor_width_;
     }
     
-    box1_x_ -= box_speed_ * secs_since_last_update;
-    box2_x_ -= box_speed_ * secs_since_last_update;
-    
-    if (box1_x_ <= -box_width_) {
-        box1_x_ = 800.0f;
-    }
-    if (box2_x_ <= -box_width_) {
-        box2_x_ = 900.0f;
+    for (int i = 0; i < max_obstacles_; ++i) {
+        obstacle_pool_[i].update(secs_current_time);
     }
   
   
@@ -196,11 +187,7 @@ void Game::drawCharacter() {
     
 void Game::drawBoxes() {
     glUniform3f(glGetUniformLocation(program_handle_, "u_color"), 1.0f, 1.0f, 0.0f);
-    drawRectBad(char_x_, char_y_, char_width_, char_height_);
-    drawRectBad(box1_x_, box1_y_, box_width_, box_height_);
-    glUniform3f(glGetUniformLocation(program_handle_, "u_color"), 0.0f, 1.0f, 1.0f);
-    drawRectBad(char_x_, char_y_, char_width_, char_height_);
-    drawRectBad(box2_x_, box2_y_, box_width_, box_height_);
+    //drawRectBad(box1_x_, box1_y_, box_width_, box_height_);
 }
 	
 // TODO(Students) Bad implemented, reimplement!!!!

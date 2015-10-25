@@ -9,7 +9,10 @@
 #ifndef __GAME_H__
 #define __GAME_H__ 1
 
+#include "obstacle.h"
 #include "player.h"
+
+#include <vector>
 
 namespace endlessrunner {
     
@@ -41,7 +44,8 @@ class Game {
 	double secs_last_update_;
 	int width_;
 	int height_;
-  float speed_;
+    float speed_;
+    unsigned int max_obstacles_;
     
     
 	// GL ES
@@ -71,10 +75,8 @@ class Game {
   void drawCharacter();
     
   // boxes
-  float box_width_;
-  float box_height_;
-  float box_speed_;
-    
+    std::vector<Obstacle> obstacle_pool_;
+
   void drawBoxes();
     
   // box1

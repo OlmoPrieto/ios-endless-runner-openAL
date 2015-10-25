@@ -21,10 +21,14 @@ public:
     void set_speed(float speed);
     float speed() const;
 
+    void set_availability(bool state);
+    bool available() const;
+
     void update(float dt);
 
 private:
     float speed_;
+    bool available_;
 };
 
 #endif /* obstacle_h */
