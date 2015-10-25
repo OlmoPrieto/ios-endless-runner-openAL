@@ -39,8 +39,8 @@ bool Obstacle::available() const {
 }
 
 void Obstacle::update(float dt) {
-    x_ = speed_ * dt;
-    if (x_ < -(width_ + width_ / 2.0f)) {
+    x_ -= speed_ * dt;
+    if (x_ < 0.0f - (width_ + width_ / 2.0f)) {
         x_ = 1000.0f;
     }
 }

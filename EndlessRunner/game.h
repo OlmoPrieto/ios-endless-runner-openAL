@@ -91,6 +91,8 @@ class Game {
     
 	// draw a rectangle
 	void drawRectBad(float x, float y, float width, float height) const;
+    unsigned int buffer_id_;
+    void drawRect(float x, float y, float width, float height) const;
         
 	// methods load shaders
 	bool loadShaders();

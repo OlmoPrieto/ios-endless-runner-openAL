@@ -34,7 +34,11 @@ Game::~Game() {
 
 void Game::setupGL() {
 	utils::LogInfo("EndlessRunner", "Game::setupGL()");
-	
+
+    glGenBuffers(1, &buffer_id_);
+    glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 20, NULL, GL_STATIC_DRAW);
+
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_DEPTH_TEST);
@@ -142,9 +146,10 @@ void Game::update() {
     }
     
     for (int i = 0; i < max_obstacles_; ++i) {
-        obstacle_pool_[i].update(secs_current_time);
+        obstacle_pool_[i].update(secs_since_last_update);
     }
-  
+
+    utils::LogDebug("obstacle x: ", "\n\n%f\n\n", obstacle_pool_[0].x());
   
   // Player gravity
   if(player.y() <= floor_y_pos_ + player.height()){
@@ -177,17 +182,19 @@ void Game::render() {
     
 void Game::drawFloor(float pos_x){
     glUniform3f(glGetUniformLocation(program_handle_, "u_color"), 1.0f, 1.0f, 1.0f);
-    drawRectBad(pos_x, floor_y_pos_, floor_width_, floor_height_);
+    drawRect(pos_x, floor_y_pos_, floor_width_, floor_height_);
 }
 
 void Game::drawCharacter() {
     glUniform3f(glGetUniformLocation(program_handle_, "u_color"), 0.1f, 1.0f, 0.4f);
-    drawRectBad(player.x(), player.y(), player.width(), player.height());
+    drawRect(player.x(), player.y(), player.width(), player.height());
 }
     
 void Game::drawBoxes() {
     glUniform3f(glGetUniformLocation(program_handle_, "u_color"), 1.0f, 1.0f, 0.0f);
     //drawRectBad(box1_x_, box1_y_, box_width_, box_height_);
+    drawRect(obstacle_pool_[0].x(), obstacle_pool_[0].y(),
+             obstacle_pool_[0].width(), obstacle_pool_[0].height());
 }
 	
 // TODO(Students) Bad implemented, reimplement!!!!
@@ -215,7 +222,41 @@ void Game::drawRectBad(float x, float y, float width, float height) const {
 		
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
-	
+
+void Game::drawRect(float x, float y, float width, float height) const {
+    // Ortho matrix
+    GLfloat matrix_ortho[] = {2.0f/width_, 0.0f, 0.0f, 0.0f,
+        0.0f, 2.0f/height_, 0.0f, 0.0f,
+        0.0f, 0.0f, -1.f, 0.0f,
+							 -1.0f, -1.0f, -0.0f, 1.0f};
+
+    // Set model view projection matrix
+    glUniformMatrix4fv(uniform_mvp_matrix_, 1, 0, matrix_ortho);
+
+
+    float vertices[] = {
+        x, y, 0.0f,
+        x, y - height, 0.0f,
+        x + width, y, 0.0f,
+        x + width, y - height, 0.0f
+    };
+
+    glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+
+    unsigned int indices[] = {
+        0, 1, 3,
+        0, 3, 2
+    };
+    glBufferSubData(GL_ARRAY_BUFFER, sizeof(vertices), sizeof(indices), indices);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_id_);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)sizeof(vertices));
+}
+
 bool Game::loadShaders() {
 	glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
 	
