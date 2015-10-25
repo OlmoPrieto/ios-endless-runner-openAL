@@ -22,6 +22,8 @@ public:
   
   void init();
   void jump();
+  void is_jumping(bool jumping);
+  bool jumping()const;
   
 private:
   float is_jumping_;

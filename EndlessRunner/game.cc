@@ -158,6 +158,7 @@ void Game::update() {
   // Player gravity
   if(player.y() <= floor_y_pos_ + player.height()){
     player.is_grounded(true);
+    player.is_jumping(false);
   }
   
   // Update objects
