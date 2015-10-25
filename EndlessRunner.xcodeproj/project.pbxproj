@@ -59,12 +59,12 @@
 		245C8EB61BBE86B40019BDC6 /* utils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = utils.mm; sourceTree = "<group>"; };
 		245C8EB81BBE88AE0019BDC6 /* support.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = support.h; sourceTree = "<group>"; };
 		245C8EB91BBE89E20019BDC6 /* support.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = support.mm; sourceTree = "<group>"; };
-		8226FDB01BDD749200913384 /* object.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = object.cc; path = EndlessRunner/object.cc; sourceTree = "<group>"; };
-		8226FDB11BDD749200913384 /* object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = object.h; path = EndlessRunner/object.h; sourceTree = "<group>"; };
-		8226FDB21BDD749200913384 /* obstacle.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = obstacle.cc; path = EndlessRunner/obstacle.cc; sourceTree = "<group>"; };
-		8226FDB31BDD749200913384 /* obstacle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = obstacle.h; path = EndlessRunner/obstacle.h; sourceTree = "<group>"; };
-		8226FDB41BDD749200913384 /* player.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = player.cc; path = EndlessRunner/player.cc; sourceTree = "<group>"; };
-		8226FDB51BDD749200913384 /* player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = player.h; path = EndlessRunner/player.h; sourceTree = "<group>"; };
+		8226FDB01BDD749200913384 /* object.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = object.cc; sourceTree = "<group>"; };
+		8226FDB11BDD749200913384 /* object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = object.h; sourceTree = "<group>"; };
+		8226FDB21BDD749200913384 /* obstacle.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = obstacle.cc; sourceTree = "<group>"; };
+		8226FDB31BDD749200913384 /* obstacle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = obstacle.h; sourceTree = "<group>"; };
+		8226FDB41BDD749200913384 /* player.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = player.cc; sourceTree = "<group>"; };
+		8226FDB51BDD749200913384 /* player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = player.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,12 +88,6 @@
 		245C8E7A1BBE6FB10019BDC6 = {
 			isa = PBXGroup;
 			children = (
-				8226FDB01BDD749200913384 /* object.cc */,
-				8226FDB11BDD749200913384 /* object.h */,
-				8226FDB21BDD749200913384 /* obstacle.cc */,
-				8226FDB31BDD749200913384 /* obstacle.h */,
-				8226FDB41BDD749200913384 /* player.cc */,
-				8226FDB51BDD749200913384 /* player.h */,
 				245C8E851BBE6FB10019BDC6 /* EndlessRunner */,
 				245C8EA31BBE6FB10019BDC6 /* EndlessRunnerTests */,
 				245C8E841BBE6FB10019BDC6 /* Products */,
@@ -112,6 +106,12 @@
 		245C8E851BBE6FB10019BDC6 /* EndlessRunner */ = {
 			isa = PBXGroup;
 			children = (
+				8226FDB01BDD749200913384 /* object.cc */,
+				8226FDB11BDD749200913384 /* object.h */,
+				8226FDB21BDD749200913384 /* obstacle.cc */,
+				8226FDB31BDD749200913384 /* obstacle.h */,
+				8226FDB41BDD749200913384 /* player.cc */,
+				8226FDB51BDD749200913384 /* player.h */,
 				245C8E891BBE6FB10019BDC6 /* AppDelegate.h */,
 				245C8E8A1BBE6FB10019BDC6 /* AppDelegate.m */,
 				245C8E8C1BBE6FB10019BDC6 /* Shader.fsh */,
