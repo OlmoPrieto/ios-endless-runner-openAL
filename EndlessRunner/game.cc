@@ -35,9 +35,9 @@ Game::~Game() {
 void Game::setupGL() {
 	utils::LogInfo("EndlessRunner", "Game::setupGL()");
 
-    glGenBuffers(1, &buffer_id_);
-    glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 20, NULL, GL_STATIC_DRAW);
+  glGenBuffers(1, &buffer_id_);
+  glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 20, NULL, GL_STATIC_DRAW);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -64,7 +64,11 @@ void Game::initialize(int width, int height) {
 	width_ = width;
 	height_ = height;
 	utils::LogInfo("EndlessRunner", "Game::initialize(%d, %d)", width_, height_);
-    
+  
+  
+  hi_score_ = 0;
+  score_ = 0;
+  
     // Screen variables
   
     // Initialize map variables
@@ -149,7 +153,7 @@ void Game::update() {
         obstacle_pool_[i].update(secs_since_last_update);
     }
 
-    utils::LogDebug("obstacle x: ", "\n\n%f\n\n", obstacle_pool_[0].x());
+  //utils::LogDebug("obstacle x: ", "\n\n%f\n\n", obstacle_pool_[0].x());
   
   // Player gravity
   if(player.y() <= floor_y_pos_ + player.height()){
@@ -160,6 +164,9 @@ void Game::update() {
   // Update objects
   player.update();
   
+  
+  //utils::LogDebug("Score", "%d\n", score_);
+  score_++;
 }
 
 
@@ -178,6 +185,9 @@ void Game::render() {
   drawFloor(floor_two_x_position_);
   drawCharacter();
   drawBoxes();
+  
+  menuStart();
+  menuEnd();
 }
     
 void Game::drawFloor(float pos_x){
@@ -255,6 +265,20 @@ void Game::drawRect(float x, float y, float width, float height) const {
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_id_);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)sizeof(vertices));
+}
+  
+int Game::score(){
+  return score_;
+}
+  
+void Game::menuStart(){
+    
+  
+}
+  
+void Game::menuEnd(){
+
+  
 }
 
 bool Game::loadShaders() {

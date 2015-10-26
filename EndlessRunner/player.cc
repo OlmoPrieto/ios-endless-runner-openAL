@@ -31,7 +31,7 @@ void Player::jump(){
     is_grounded(false);
     
     // Change this
-    set_y(400.0f);
+    set_y(600.0f);
     
   }
   

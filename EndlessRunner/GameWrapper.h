@@ -23,6 +23,8 @@
 - (void)pause;
 - (void)resume;
 
+-(int)score;
+
 - (void)update;
 - (void)render;
 

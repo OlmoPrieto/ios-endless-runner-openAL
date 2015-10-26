@@ -16,6 +16,7 @@
 }
 @property (strong, nonatomic) EAGLContext *context;
 
+@property (strong, nonatomic) UILabel *uiLabel;
 
 - (void)setupGL;
 - (void)tearDownGL;
@@ -53,6 +54,9 @@
     float width = self.view.bounds.size.width;
     float height = self.view.bounds.size.height;
     float scale = [[UIScreen mainScreen] scale];
+  
+  self.uiLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 20, 15)];
+  
     [self.gameWrapper initializeWithWidth:(width*scale) andHeight:(height*scale)];
 }
 
@@ -106,7 +110,15 @@
 
 - (void)update
 {
-    [[self gameWrapper] update];
+  // Score
+  self.uiLabel.text = [NSString stringWithFormat:@"Score:  %d", [[self gameWrapper] score]];
+  self.uiLabel.frame=CGRectMake(75, 35, 160, 20);
+  self.uiLabel.font=[UIFont boldSystemFontOfSize:25.0];
+  self.uiLabel.textColor=[UIColor yellowColor];
+  self.uiLabel.backgroundColor=[UIColor clearColor];
+  [self.view addSubview:self.uiLabel];
+  
+  [[self gameWrapper] update];
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect

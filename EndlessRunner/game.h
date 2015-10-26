@@ -34,6 +34,8 @@ class Game {
         
 	void update();
 	void render();
+  
+  int score();
         
  private:
 	Game(const Game&);
@@ -44,10 +46,14 @@ class Game {
 	double secs_last_update_;
 	int width_;
 	int height_;
-    float speed_;
-    unsigned int max_obstacles_;
+  float speed_;
+  unsigned int max_obstacles_;
     
-    
+  
+  // Score
+  unsigned int hi_score_;
+  unsigned int score_;
+  
 	// GL ES
 	int program_handle_;
 	int attribute_position_;
@@ -75,7 +81,7 @@ class Game {
   void drawCharacter();
     
   // boxes
-    std::vector<Obstacle> obstacle_pool_;
+  std::vector<Obstacle> obstacle_pool_;
 
   void drawBoxes();
     
@@ -91,9 +97,14 @@ class Game {
     
 	// draw a rectangle
 	void drawRectBad(float x, float y, float width, float height) const;
-    unsigned int buffer_id_;
-    void drawRect(float x, float y, float width, float height) const;
-        
+  unsigned int buffer_id_;
+  void drawRect(float x, float y, float width, float height) const;
+  
+  // Game finish
+  void menuEnd();
+  void menuStart();
+  
+  
 	// methods load shaders
 	bool loadShaders();
 	int loadProgram(const char* str_vert_source, const char* str_frag_source);

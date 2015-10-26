@@ -62,6 +62,10 @@
   ((endlessrunner::Game*)_game)->screenTouched();
 }
 
+-(int)score{
+  return ((endlessrunner::Game*)_game)->score();
+}
+
 
 - (void)pause
 {
