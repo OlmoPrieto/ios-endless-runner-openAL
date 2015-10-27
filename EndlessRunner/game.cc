@@ -10,6 +10,7 @@
 
 #include <OpenGLES/ES2/gl.h>
 #include <stddef.h>
+#include <stdlib.h>
 
 #include "support.h"
 #include "utils.h"
@@ -64,10 +65,11 @@ void Game::initialize(int width, int height) {
 	width_ = width;
 	height_ = height;
 	utils::LogInfo("EndlessRunner", "Game::initialize(%d, %d)", width_, height_);
+
+    srand(time(NULL));
   
-  
-  hi_score_ = 0;
-  score_ = 0;
+    hi_score_ = 0;
+    score_ = 0;
   
     // Screen variables
   
@@ -91,7 +93,7 @@ void Game::initialize(int width, int height) {
     obstacle_pool_.reserve(max_obstacles_);
     for (int i = 0; i < max_obstacles_; ++i) {
         Obstacle o;
-        o.init(800.0f + i * 100.0f, floor_height_ + 100.0f, 100.0f,
+        o.init(20000.0f, floor_height_ + 100.0f, 100.0f,
                100.0f, 75.0f);
         obstacle_pool_.push_back(o);
     }
@@ -136,9 +138,10 @@ void Game::update() {
 	double secs_current_time = utils::GetTimeSeconds();
 	double secs_since_last_update = secs_current_time - secs_last_update_;
 	secs_last_update_ = secs_current_time;
+    static float accum_time = 0;
+    accum_time += secs_since_last_update;
     
     // Dirty Floor Movement
-    
     floor_one_x_position_ -= 5.0f;
     floor_two_x_position_ -= 5.0f;
     
@@ -148,12 +151,39 @@ void Game::update() {
     if(floor_two_x_position_ <= (-floor_width_)){
         floor_two_x_position_ = 0.0f + floor_width_;
     }
-    
-    for (int i = 0; i < max_obstacles_; ++i) {
-        obstacle_pool_[i].update(secs_since_last_update);
+
+    // obstacle spawn
+    if (accum_time > 2.3f) {
+        /* 
+         *  each 3 seconds, spawn an obstacle
+         *  a spawned obstacle is not available.
+         *  when an obstacle reaches the left side of the screen,
+         *  it automatically sets its position off the screen and makes itself available
+        */
+        accum_time = 0.0f;
+        float color[3];
+        Obstacle *obs = &obstacle_pool_[0];
+        for (int i = 0; i < max_obstacles_; ++i) {
+            obs = &obstacle_pool_[i];
+            if (obs->available()) {
+                obs->set_availability(false);
+                obs->set_x(1000.0f);
+                color[0] = static_cast<float>(rand()) / static_cast<float> (RAND_MAX);
+                color[1] = static_cast<float>(rand()) / static_cast<float> (RAND_MAX);
+                color[2] = static_cast<float>(rand()) / static_cast<float> (RAND_MAX);
+                obs->set_color(color);
+
+                break;
+            }
+        }
     }
 
-  //utils::LogDebug("obstacle x: ", "\n\n%f\n\n", obstacle_pool_[0].x());
+    for (int i = 0; i < max_obstacles_; ++i) {
+        // only update not available obstacles (spawned obstacles)
+        if (!obstacle_pool_[i].available()) {
+            obstacle_pool_[i].update(secs_since_last_update);
+        }
+    }
   
   // Player gravity
   if(player.y() <= floor_y_pos_ + player.height()){
@@ -164,7 +194,17 @@ void Game::update() {
   // Update objects
   player.update();
   
-  
+    // Check collision between the player and the obstacles
+    {
+        Obstacle *obs = NULL;
+        for (int i = 0; i < max_obstacles_; ++i) {
+            obs = &obstacle_pool_[i];
+            if (Object::colliding(player, *obs)) {
+                utils::LogDebug("COLLISIONS", "Player is colliding!\n");
+            }
+        }
+    }
+
   //utils::LogDebug("Score", "%d\n", score_);
   score_++;
 }
@@ -201,10 +241,18 @@ void Game::drawCharacter() {
 }
     
 void Game::drawBoxes() {
-    glUniform3f(glGetUniformLocation(program_handle_, "u_color"), 1.0f, 1.0f, 0.0f);
-    //drawRectBad(box1_x_, box1_y_, box_width_, box_height_);
-    drawRect(obstacle_pool_[0].x(), obstacle_pool_[0].y(),
-             obstacle_pool_[0].width(), obstacle_pool_[0].height());
+    Obstacle *obs = NULL;
+    for (int i = 0; i < max_obstacles_; ++i) {
+        obs = &obstacle_pool_[i];
+        // only draw available obstacles (spawned obstacles)
+        if (!obs->available()) {
+            glUniform3f(glGetUniformLocation(program_handle_, "u_color"),
+                        obs->color()[0],
+                        obs->color()[1],
+                        obs->color()[2]);
+            drawRect(obs->x(), obs->y(), obs->width(), obs->height());
+        }
+    }
 }
 	
 // TODO(Students) Bad implemented, reimplement!!!!

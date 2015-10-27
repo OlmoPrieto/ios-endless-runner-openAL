@@ -86,3 +86,8 @@ void Object::doGravity(){
   }
   
 }
+
+bool Object::colliding(const Object &a, const Object &b) {
+    return (a.x_ + a.width_ >= b.x_ && a.x_ <= b.x_ + b.width_
+            && a.y_ + a.height_ >= b.y_ && a.y_ <= b.y_ + b.height_);
+}

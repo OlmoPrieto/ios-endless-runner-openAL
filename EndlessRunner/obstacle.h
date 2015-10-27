@@ -24,11 +24,15 @@ public:
     void set_availability(bool state);
     bool available() const;
 
+    void set_color(float color[3]);
+    const float* color() const;
+
     void update(float dt);
 
 private:
     float speed_;
     bool available_;
+    float color_[3];
 };
 
 #endif /* obstacle_h */

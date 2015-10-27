@@ -29,13 +29,14 @@ class Object {
     float height() const;
 
   
-  void update();
-  void draw();
-  void doGravity();
-  void isAffectedByGravity(bool affected);
-  void is_grounded(bool grounded);
-  bool grounded()const;
-  
+    void update();
+    void draw();
+    void doGravity();
+    void isAffectedByGravity(bool affected);
+    void is_grounded(bool grounded);
+    bool grounded()const;
+
+    static bool colliding(const Object &a, const Object &b);
     
   protected:
 
