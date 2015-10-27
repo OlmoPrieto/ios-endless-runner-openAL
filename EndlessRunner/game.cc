@@ -26,7 +26,7 @@ Game::Game()
 	program_handle_(0),
 	attribute_position_(0),
 	uniform_mvp_matrix_(0) {
-    utils::LogInfo("EndlessRunner", "Game::Game()");
+  utils::LogInfo("EndlessRunner", "Game::Game()");
 }
 
 Game::~Game() {
@@ -62,33 +62,22 @@ void Game::teardownGL() {
 }
 	
 void Game::initialize(int width, int height) {
-	width_ = width;
-	height_ = height;
-	utils::LogInfo("EndlessRunner", "Game::initialize(%d, %d)", width_, height_);
-
-    srand(time(NULL));
-  
+    width_ = width;
+    height_ = height;
+    
     hi_score_ = 0;
-    score_ = 0;
-  
-    // Screen variables
-  
-    // Initialize map variables
-    floor_height_ = 50.0f;
-    floor_width_ = 1000.0f; // Hardcode now -> next, get screen width
-    floor_x_pos_ = 0.0f;
-    floor_y_pos_ = 0.0f + floor_height_;
-	
-    floor_one_x_position_ = floor_x_pos_;
-    floor_two_x_position_ = floor_one_x_position_ + floor_width_;
+    
+    utils::LogInfo("EndlessRunner", "Game::initialize(%d, %d)", width_, height_);
+    
+    current_scene_ = SCENE_MENU;
+    
+    
 
-  
-    player.set_width(100.0f);
-    player.set_height(200.0f);
-    player.set_position(100.0f, floor_height_ + player.height() + 100.0f);
-    player.isAffectedByGravity(true);
-    player.is_grounded(false);
-
+    
+    restartGameValues();
+    
+    
+    
     max_obstacles_ = 6;
     obstacle_pool_.reserve(max_obstacles_);
     for (int i = 0; i < max_obstacles_; ++i) {
@@ -98,8 +87,39 @@ void Game::initialize(int width, int height) {
         obstacle_pool_.push_back(o);
     }
     
-	// reset timer
-	secs_last_update_ = 0.0;
+}
+    
+void Game::restartGameValues(){
+    
+    srand(time(NULL));
+
+    score_ = 0;
+    
+    // Screen variables
+    
+    // Initialize map variables
+    floor_height_ = 50.0f;
+    floor_width_ = 1000.0f; // Hardcode now -> next, get screen width
+    floor_x_pos_ = 0.0f;
+    floor_y_pos_ = 0.0f + floor_height_;
+    
+    floor_one_x_position_ = floor_x_pos_;
+    floor_two_x_position_ = floor_one_x_position_ + floor_width_;
+    
+    
+    player.set_width(100.0f);
+    player.set_height(200.0f);
+    player.set_position(100.0f, floor_height_ + player.height() + 100.0f);
+    player.isAffectedByGravity(true);
+    player.is_grounded(false);
+    player.set_texture("player_texture.jpg");
+    
+    for (int i = 0; i < max_obstacles_; ++i) {
+        obstacle_pool_[i].set_position(20000.0f, floor_height_ + 100.0f);
+    }
+    
+    // reset timer
+    secs_last_update_ = 0.0;
 }
 
 void Game::touchDownAt(float x, float y) {
@@ -110,7 +130,15 @@ void Game::touchUpAt(float x, float y) {
 }
   
 void Game::screenTouched(){
-  player.jump();
+    if(current_scene_ == SCENE_MENU){
+        current_scene_ = SCENE_GAME;
+    }else if(current_scene_ == SCENE_GAME){
+        player.jump();
+    }else if(current_scene_ == SCENE_END){
+        current_scene_ = SCENE_MENU;
+        restartGameValues();
+    }
+  
 }
 
 void Game::pause() {
@@ -126,87 +154,96 @@ void Game::resume() {
 
 void Game::update() {
 	if (is_paused_ || !is_opengl_init_) return;
-  
-  
-	
-	// utils::LogInfo("EndlessRunner", "Game update.");
-	
-	// Calculate time since last update
-	if (secs_last_update_ == 0.0) {
-		secs_last_update_ = utils::GetTimeSeconds();
-	}
-	double secs_current_time = utils::GetTimeSeconds();
-	double secs_since_last_update = secs_current_time - secs_last_update_;
-	secs_last_update_ = secs_current_time;
-    static float accum_time = 0;
-    accum_time += secs_since_last_update;
     
-    // Dirty Floor Movement
-    floor_one_x_position_ -= 5.0f;
-    floor_two_x_position_ -= 5.0f;
+    if(current_scene_ == SCENE_MENU){
     
-    if(floor_one_x_position_ <= (-floor_width_)){
-        floor_one_x_position_ = 0.0f + floor_width_;
-    }
-    if(floor_two_x_position_ <= (-floor_width_)){
-        floor_two_x_position_ = 0.0f + floor_width_;
-    }
+    }else if(current_scene_ == SCENE_GAME){
+	
+        // utils::LogInfo("EndlessRunner", "Game update.");
+	
+        // Calculate time since last update
+        if (secs_last_update_ == 0.0) {
+            secs_last_update_ = utils::GetTimeSeconds();
+        }
+        double secs_current_time = utils::GetTimeSeconds();
+        double secs_since_last_update = secs_current_time - secs_last_update_;
+        secs_last_update_ = secs_current_time;
+        static float accum_time = 0;
+        accum_time += secs_since_last_update;
+    
+        // Dirty Floor Movement
+        floor_one_x_position_ -= 5.0f;
+        floor_two_x_position_ -= 5.0f;
+    
+        if(floor_one_x_position_ <= (-floor_width_)){
+            floor_one_x_position_ = 0.0f + floor_width_;
+        }
+        if(floor_two_x_position_ <= (-floor_width_)){
+            floor_two_x_position_ = 0.0f + floor_width_;
+        }
 
-    // obstacle spawn
-    if (accum_time > 2.3f) {
-        /* 
-         *  each 3 seconds, spawn an obstacle
-         *  a spawned obstacle is not available.
-         *  when an obstacle reaches the left side of the screen,
-         *  it automatically sets its position off the screen and makes itself available
-        */
-        accum_time = 0.0f;
-        float color[3];
-        Obstacle *obs = &obstacle_pool_[0];
-        for (int i = 0; i < max_obstacles_; ++i) {
-            obs = &obstacle_pool_[i];
-            if (obs->available()) {
-                obs->set_availability(false);
-                obs->set_x(1000.0f);
-                color[0] = static_cast<float>(rand()) / static_cast<float> (RAND_MAX);
-                color[1] = static_cast<float>(rand()) / static_cast<float> (RAND_MAX);
-                color[2] = static_cast<float>(rand()) / static_cast<float> (RAND_MAX);
-                obs->set_color(color);
-
-                break;
+        // obstacle spawn
+        if (accum_time > 2.3f) {
+            /*
+             *  each 3 seconds, spawn an obstacle
+             *  a spawned obstacle is not available.
+             *  when an obstacle reaches the left side of the screen,
+             *  it automatically sets its position off the screen and makes itself available
+             */
+            accum_time = 0.0f;
+            float color[3];
+            Obstacle *obs = &obstacle_pool_[0];
+            for (int i = 0; i < max_obstacles_; ++i) {
+                obs = &obstacle_pool_[i];
+                if (obs->available()) {
+                    obs->set_availability(false);
+                    obs->set_x(1000.0f);
+                    color[0] = static_cast<float>(rand()) / static_cast<float> (RAND_MAX);
+                    color[1] = static_cast<float>(rand()) / static_cast<float> (RAND_MAX);
+                    color[2] = static_cast<float>(rand()) / static_cast<float> (RAND_MAX);
+                    obs->set_color(color);
+                    break;
+                }
             }
         }
-    }
 
-    for (int i = 0; i < max_obstacles_; ++i) {
-        // only update not available obstacles (spawned obstacles)
-        if (!obstacle_pool_[i].available()) {
-            obstacle_pool_[i].update(secs_since_last_update);
-        }
-    }
-  
-  // Player gravity
-  if(player.y() <= floor_y_pos_ + player.height()){
-    player.is_grounded(true);
-    player.is_jumping(false);
-  }
-  
-  // Update objects
-  player.update();
-  
-    // Check collision between the player and the obstacles
-    {
-        Obstacle *obs = NULL;
         for (int i = 0; i < max_obstacles_; ++i) {
-            obs = &obstacle_pool_[i];
-            if (Object::colliding(player, *obs)) {
-                utils::LogDebug("COLLISIONS", "Player is colliding!\n");
+            // only update not available obstacles (spawned obstacles)
+            if (!obstacle_pool_[i].available()) {
+                obstacle_pool_[i].update(secs_since_last_update);
             }
         }
-    }
+  
+        // Player gravity
+        if(player.y() <= floor_y_pos_ + player.height()){
+            player.is_grounded(true);
+            player.is_jumping(false);
+        }
+  
+        // Update objects
+        player.update();
+  
+        // Check collision between the player and the obstacles
+        {
+            Obstacle *obs = NULL;
+            for (int i = 0; i < max_obstacles_; ++i) {
+                obs = &obstacle_pool_[i];
+                if (Object::colliding(player, *obs)) {
+                    utils::LogDebug("COLLISIONS", "Player is colliding!\n");
+                    endGame();
+                }
+            }
+        }
 
-  //utils::LogDebug("Score", "%d\n", score_);
-  score_++;
+        //utils::LogDebug("Score", "%d\n", score_);
+        score_++;
+    
+    } // SCENE GAME
+    else if(current_scene_ == SCENE_END){
+        
+    }
+    
+    
 }
 
 
@@ -214,20 +251,27 @@ void Game::render() {
 	if (!is_opengl_init_) return;
 	
 	// utils::LogInfo("EndlessRunner", "Game render.");
-	
-	glClear(GL_COLOR_BUFFER_BIT);
-	glClear(GL_DEPTH_BUFFER_BIT);
     
-  glUseProgram(program_handle_);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_DEPTH_BUFFER_BIT);
+    glUseProgram(program_handle_);
     
-  //drawRectBad(300.0f, 400.0f, 100.0f, 200.0f);
-  drawFloor(floor_one_x_position_);
-  drawFloor(floor_two_x_position_);
-  drawCharacter();
-  drawBoxes();
-  
-  menuStart();
-  menuEnd();
+    if(current_scene_ == SCENE_MENU){
+        
+    }else if(current_scene_ == SCENE_GAME){
+
+        drawFloor(floor_one_x_position_);
+        drawFloor(floor_two_x_position_);
+        drawCharacter();
+        drawBoxes();
+    }else if (current_scene_ == SCENE_END){
+        
+    }
+    
+}
+    
+unsigned char Game::current_scene()const{
+    return current_scene_;
 }
     
 void Game::drawFloor(float pos_x){
@@ -237,6 +281,16 @@ void Game::drawFloor(float pos_x){
 
 void Game::drawCharacter() {
     glUniform3f(glGetUniformLocation(program_handle_, "u_color"), 0.1f, 1.0f, 0.4f);
+    
+    // Texture
+    //unsigned int texture;
+    //glGenTextures(1, &texture);
+    //player.set_texture_id(texture);
+    //glActiveTexture(GL_TEXTURE0);
+    //glBindTexture(GL_TEXTURE_2D, player.texture_id());
+    //glUniform1i(glGetUniformLocation(program_handle_, "u_texture"), 0);
+    
+    
     drawRect(player.x(), player.y(), player.width(), player.height());
 }
     
@@ -316,17 +370,23 @@ void Game::drawRect(float x, float y, float width, float height) const {
 }
   
 int Game::score(){
-  return score_;
+    return score_;
 }
-  
-void Game::menuStart(){
     
-  
+int Game::best_score(){
+    return hi_score_;
 }
-  
-void Game::menuEnd(){
 
   
+void Game::endGame(){
+    set_best_score(score_);
+    current_scene_ = SCENE_END;
+}
+    
+void Game::set_best_score(int score){
+    if(score > best_score()){
+        hi_score_ = score;
+    }
 }
 
 bool Game::loadShaders() {

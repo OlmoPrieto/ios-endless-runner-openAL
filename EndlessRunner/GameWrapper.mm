@@ -65,7 +65,12 @@
 -(int)score{
   return ((endlessrunner::Game*)_game)->score();
 }
-
+-(int)best_score{
+    return ((endlessrunner::Game*)_game)->best_score();
+}
+-(unsigned char)current_scene{
+    return ((endlessrunner::Game*)_game)->current_scene();
+}
 
 - (void)pause
 {

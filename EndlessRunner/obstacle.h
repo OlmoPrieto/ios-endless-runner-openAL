@@ -12,6 +12,7 @@
 #include "object.h"
 
 class Obstacle : public Object {
+  
 public:
     Obstacle();
     ~Obstacle();

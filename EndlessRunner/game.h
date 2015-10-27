@@ -27,7 +27,9 @@ class Game {
 	
 	void touchDownAt(float x, float y);
 	void touchUpAt(float x, float y);
-  void screenTouched();
+    void screenTouched();
+    unsigned char current_scene()const;
+    void set_best_score(int score);
         
 	void pause();
 	void resume();
@@ -35,8 +37,9 @@ class Game {
 	void update();
 	void render();
   
-  int score();
-        
+    int score();
+    int best_score();
+    
  private:
 	Game(const Game&);
 	void operator=(const Game&);
@@ -46,63 +49,66 @@ class Game {
 	double secs_last_update_;
 	int width_;
 	int height_;
-  float speed_;
-  unsigned int max_obstacles_;
+    float speed_;
+    unsigned int max_obstacles_;
+    enum Scenes { SCENE_MENU, SCENE_GAME, SCENE_END, SCENES_NUMBER };
+    unsigned char current_scene_; // 0 : menu, 1 : game, 2 : end
     
   
-  // Score
-  unsigned int hi_score_;
-  unsigned int score_;
+    // Score
+    unsigned int hi_score_;
+    unsigned int score_;
   
 	// GL ES
 	int program_handle_;
 	int attribute_position_;
 	int uniform_mvp_matrix_;
     
-  // Map Variables
-  float floor_x_pos_;
-  float floor_y_pos_;
-  float floor_height_;
-  float floor_width_;
+    // Map Variables
+    float floor_x_pos_;
+    float floor_y_pos_;
+    float floor_height_;
+    float floor_width_;
     
-  float floor_one_x_position_;
-  float floor_two_x_position_;
+    float floor_one_x_position_;
+    float floor_two_x_position_;
     
-  // Character variables
-  float char_x_;
-  float char_y_;
-  float char_width_;
-  float char_height_;
-  float jump_height_;
-  bool is_jumping_;
+    // Character variables
+    float char_x_;
+    float char_y_;
+    float char_width_;
+    float char_height_;
+    float jump_height_;
+    bool is_jumping_;
   
-  Player player;
+    Player player;
     
-  void drawCharacter();
+    void drawCharacter();
     
-  // boxes
-  std::vector<Obstacle> obstacle_pool_;
+    void restartGameValues();
+    
+    // boxes
+    std::vector<Obstacle> obstacle_pool_;
 
-  void drawBoxes();
+    void drawBoxes();
     
-  // box1
-  float box1_x_;
-  float box1_y_;
+    // box1
+    float box1_x_;
+    float box1_y_;
     
-  // box2
-  float box2_x_;
-  float box2_y_;
+    // box2
+    float box2_x_;
+    float box2_y_;
     
-  void drawFloor(float pos_x);
+    void drawFloor(float pos_x);
     
 	// draw a rectangle
 	void drawRectBad(float x, float y, float width, float height) const;
-  unsigned int buffer_id_;
-  void drawRect(float x, float y, float width, float height) const;
-  
-  // Game finish
-  void menuEnd();
-  void menuStart();
+    unsigned int buffer_id_;
+    void drawRect(float x, float y, float width, float height) const;
+    
+    // Game finish
+    void endGame();
   
   
 	// methods load shaders

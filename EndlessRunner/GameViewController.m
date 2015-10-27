@@ -16,7 +16,10 @@
 }
 @property (strong, nonatomic) EAGLContext *context;
 
-@property (strong, nonatomic) UILabel *uiLabel;
+@property (strong, nonatomic) UILabel *score_text;
+@property (strong, nonatomic) UILabel *main_menu_text;
+@property (strong, nonatomic) UILabel *current_score;
+@property (strong, nonatomic) UILabel *best_score;
 
 - (void)setupGL;
 - (void)tearDownGL;
@@ -55,7 +58,10 @@
     float height = self.view.bounds.size.height;
     float scale = [[UIScreen mainScreen] scale];
   
-  self.uiLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 20, 15)];
+    self.main_menu_text = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 20, 15)];
+    self.score_text = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 20, 15)];
+    self.current_score = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 20, 15)];
+    self.best_score = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 20, 15)];
   
     [self.gameWrapper initializeWithWidth:(width*scale) andHeight:(height*scale)];
 }
@@ -110,13 +116,52 @@
 
 - (void)update
 {
-  // Score
-  self.uiLabel.text = [NSString stringWithFormat:@"Score:  %d", [[self gameWrapper] score]];
-  self.uiLabel.frame=CGRectMake(75, 35, 160, 20);
-  self.uiLabel.font=[UIFont boldSystemFontOfSize:25.0];
-  self.uiLabel.textColor=[UIColor yellowColor];
-  self.uiLabel.backgroundColor=[UIColor clearColor];
-  [self.view addSubview:self.uiLabel];
+    unsigned char current_scene = [[self gameWrapper] current_scene];
+
+    if(current_scene == 0){ // Main Menu
+        [self.score_text removeFromSuperview];
+        [self.current_score removeFromSuperview];
+        [self.best_score removeFromSuperview];
+        
+        self.main_menu_text.text = @"Press anywhere to play:";
+        self.main_menu_text.frame = CGRectMake(90, 50, 400, 100);
+        self.main_menu_text.font = [UIFont boldSystemFontOfSize:25.0f];
+        self.main_menu_text.textColor = [UIColor whiteColor];
+        self.main_menu_text.backgroundColor = [UIColor clearColor];
+        [self.view addSubview:self.main_menu_text];
+    }else if(current_scene == 1){ // Game
+        // Remove other labels
+        [self.main_menu_text removeFromSuperview];
+        [self.current_score removeFromSuperview];
+        [self.best_score removeFromSuperview];
+        
+        // Score
+        self.score_text.text = [NSString stringWithFormat:@"Score:  %d", [[self gameWrapper] score]];
+        self.score_text.frame = CGRectMake(75, 35, 160, 20);
+        self.score_text.font=[UIFont boldSystemFontOfSize:25.0];
+        self.score_text.textColor=[UIColor whiteColor];
+        self.score_text.backgroundColor=[UIColor clearColor];
+        [self.view addSubview:self.score_text];
+    }else if(current_scene == 2){ // End menu
+        [self.score_text removeFromSuperview];
+        [self.main_menu_text removeFromSuperview];
+        
+        self.current_score.text = [NSString stringWithFormat:@"Game Score  %d", [[self gameWrapper] score]];
+        self.current_score.frame = CGRectMake(90, 50, 200, 100);
+        self.current_score.font=[UIFont boldSystemFontOfSize:25.0];
+        self.current_score.textColor=[UIColor whiteColor];
+        self.current_score.backgroundColor=[UIColor clearColor];
+        
+        self.best_score.text = [NSString stringWithFormat:@"Best Score  %d", [[self gameWrapper] best_score]];
+        self.best_score.frame = CGRectMake(90, 100, 200, 100);
+        self.best_score.font=[UIFont boldSystemFontOfSize:25.0];
+        self.best_score.textColor=[UIColor whiteColor];
+        self.best_score.backgroundColor=[UIColor clearColor];
+        
+        [self.view addSubview:self.current_score];
+        [self.view addSubview:self.best_score];
+    }
+
   
   [[self gameWrapper] update];
 }

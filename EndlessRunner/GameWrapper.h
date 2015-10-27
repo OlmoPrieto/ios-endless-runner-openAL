@@ -24,6 +24,8 @@
 - (void)resume;
 
 -(int)score;
+-(int)best_score;
+-(unsigned char)current_scene;
 
 - (void)update;
 - (void)render;

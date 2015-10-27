@@ -9,7 +9,18 @@
 #ifndef object_h
 #define object_h
 
+#include "support.h"
+
 class Object {
+  
+  struct Texture{
+    unsigned char* texture;
+    unsigned int texture_id;
+    int width;
+    int height;
+    bool has_alpha;
+  }texture;
+  
   public:
     Object();
     ~Object();
@@ -22,6 +33,10 @@ class Object {
     void set_height(float height);
 
     void set_position(float x, float y);
+    void set_texture(const char* texture_path);
+    void set_texture_id(unsigned int texture_id);
+    unsigned int texture_id()const;
+    unsigned char* texture_handler()const;
 
     float x() const;
     float y() const;
