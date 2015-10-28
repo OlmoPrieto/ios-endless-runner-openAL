@@ -33,7 +33,7 @@ class Object {
     void set_height(float height);
 
     void set_position(float x, float y);
-    void set_texture(const char* texture_path);
+    void set_texture(unsigned char* texture_path);
     void set_texture_id(unsigned int texture_id);
     unsigned int texture_id()const;
     unsigned char* texture_handler()const;

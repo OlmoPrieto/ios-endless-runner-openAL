@@ -36,16 +36,35 @@ Game::~Game() {
 void Game::setupGL() {
 	utils::LogInfo("EndlessRunner", "Game::setupGL()");
 
-  glGenBuffers(1, &buffer_id_);
-  glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 20, NULL, GL_STATIC_DRAW);
+    glGenBuffers(1, &buffer_id_);
+    glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 100, NULL, GL_STATIC_DRAW);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_DEPTH_TEST);
 	
 	loadShaders();
-	
+
+    GLuint texture_id;
+    glGenTextures(1, &texture_id);
+    glBindTexture(GL_TEXTURE_2D, texture_id);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    player.set_texture_id(texture_id);
+    int width, height;
+    bool has_alpha;
+    player.set_texture(support::LoadImageFile("player_texture.jpg", &width, &height,
+                                                         &has_alpha));
+    if (player.texture_handler() == NULL) {
+        utils::LogDebug("errors", "FAILED TO LOAD TEXTURE\n");
+    }
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                 player.texture_handler());
+    glGenerateMipmap(GL_TEXTURE_2D);
+
 	is_opengl_init_ = true;
 }
 	
@@ -72,12 +91,6 @@ void Game::initialize(int width, int height) {
     current_scene_ = SCENE_MENU;
     
     
-
-    
-    restartGameValues();
-    
-    
-    
     max_obstacles_ = 6;
     obstacle_pool_.reserve(max_obstacles_);
     for (int i = 0; i < max_obstacles_; ++i) {
@@ -86,6 +99,8 @@ void Game::initialize(int width, int height) {
                100.0f, 75.0f);
         obstacle_pool_.push_back(o);
     }
+    
+    restartGameValues();
     
 }
     
@@ -112,7 +127,6 @@ void Game::restartGameValues(){
     player.set_position(100.0f, floor_height_ + player.height() + 100.0f);
     player.isAffectedByGravity(true);
     player.is_grounded(false);
-    player.set_texture("player_texture.jpg");
     
     for (int i = 0; i < max_obstacles_; ++i) {
         obstacle_pool_[i].set_position(20000.0f, floor_height_ + 100.0f);
@@ -185,7 +199,7 @@ void Game::update() {
         // obstacle spawn
         if (accum_time > 2.3f) {
             /*
-             *  each 3 seconds, spawn an obstacle
+             *  each 2.3 seconds, spawn an obstacle
              *  a spawned obstacle is not available.
              *  when an obstacle reaches the left side of the screen,
              *  it automatically sets its position off the screen and makes itself available
@@ -259,7 +273,8 @@ void Game::render() {
     if(current_scene_ == SCENE_MENU){
         
     }else if(current_scene_ == SCENE_GAME){
-
+        // for now, only the player has a texture so each object
+        // has to set an uniform in the shader indicating it has no texture
         drawFloor(floor_one_x_position_);
         drawFloor(floor_two_x_position_);
         drawCharacter();
@@ -276,21 +291,14 @@ unsigned char Game::current_scene()const{
     
 void Game::drawFloor(float pos_x){
     glUniform3f(glGetUniformLocation(program_handle_, "u_color"), 1.0f, 1.0f, 1.0f);
+    glUniform1i(glGetUniformLocation(program_handle_, "has_texture"), 0);
     drawRect(pos_x, floor_y_pos_, floor_width_, floor_height_);
 }
 
 void Game::drawCharacter() {
     glUniform3f(glGetUniformLocation(program_handle_, "u_color"), 0.1f, 1.0f, 0.4f);
-    
-    // Texture
-    //unsigned int texture;
-    //glGenTextures(1, &texture);
-    //player.set_texture_id(texture);
-    //glActiveTexture(GL_TEXTURE0);
-    //glBindTexture(GL_TEXTURE_2D, player.texture_id());
-    //glUniform1i(glGetUniformLocation(program_handle_, "u_texture"), 0);
-    
-    
+    glUniform1i(glGetUniformLocation(program_handle_, "has_texture"), 1);
+
     drawRect(player.x(), player.y(), player.width(), player.height());
 }
     
@@ -304,6 +312,7 @@ void Game::drawBoxes() {
                         obs->color()[0],
                         obs->color()[1],
                         obs->color()[2]);
+            glUniform1i(glGetUniformLocation(program_handle_, "has_texture"), 0);
             drawRect(obs->x(), obs->y(), obs->width(), obs->height());
         }
     }
@@ -345,6 +354,8 @@ void Game::drawRect(float x, float y, float width, float height) const {
     // Set model view projection matrix
     glUniformMatrix4fv(uniform_mvp_matrix_, 1, 0, matrix_ortho);
 
+    // activate the only texture by now
+    glBindTexture(GL_TEXTURE_2D, player.texture_id());
 
     float vertices[] = {
         x, y, 0.0f,
@@ -352,21 +363,35 @@ void Game::drawRect(float x, float y, float width, float height) const {
         x + width, y, 0.0f,
         x + width, y - height, 0.0f
     };
-
     glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+
+    float uv[] = {
+        0.0f, 1.0f,
+        0.0f, 0.0f,
+        1.0f, 1.0f,
+        1.0f, 0.0f
+    };
+    glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
+    glBufferSubData(GL_ARRAY_BUFFER, sizeof(vertices), sizeof(uv), uv);
 
     unsigned int indices[] = {
         0, 1, 3,
         0, 3, 2
     };
-    glBufferSubData(GL_ARRAY_BUFFER, sizeof(vertices), sizeof(indices), indices);
+    glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
+    glBufferSubData(GL_ARRAY_BUFFER, sizeof(vertices) + sizeof(uv),
+                    sizeof(indices), indices);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
+    glVertexAttribPointer(glGetAttribLocation(program_handle_, "a_position"), 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+    glEnableVertexAttribArray(glGetAttribLocation(program_handle_, "a_position"));
+    glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
+    glVertexAttribPointer(glGetAttribLocation(program_handle_, "a_uv"), 2, GL_FLOAT, GL_FALSE, 0, (void*)sizeof(vertices));
+    glEnableVertexAttribArray(glGetAttribLocation(program_handle_, "a_uv"));
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_id_);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)sizeof(vertices));
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(sizeof(vertices) + sizeof(uv)));
 }
   
 int Game::score(){

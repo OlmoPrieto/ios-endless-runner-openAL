@@ -45,8 +45,8 @@ void Object::set_position(float x, float y) {
     y_ = y;
 }
 
-void Object::set_texture(const char* texture_path){
-  texture.texture = support::LoadImageFile(texture_path, &texture.width, &texture.height, &texture.has_alpha);
+void Object::set_texture(unsigned char* texture_path){
+    texture.texture = texture_path;
 }
 
 void Object::set_texture_id(unsigned int texture_id){
