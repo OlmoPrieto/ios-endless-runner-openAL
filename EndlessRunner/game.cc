@@ -38,7 +38,7 @@ void Game::setupGL() {
 
     glGenBuffers(1, &buffer_id_);
     glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 100, NULL, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 50, NULL, GL_STATIC_DRAW);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -61,7 +61,7 @@ void Game::setupGL() {
     if (player.texture_handler() == NULL) {
         utils::LogDebug("errors", "FAILED TO LOAD TEXTURE\n");
     }
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE,
                  player.texture_handler());
     glGenerateMipmap(GL_TEXTURE_2D);
 
@@ -76,6 +76,9 @@ void Game::teardownGL() {
 			glDeleteProgram(program_handle_);
 			program_handle_ = 0;
 		}
+        if (buffer_id_) {
+            glDeleteBuffers(1, &buffer_id_);
+        }
 		utils::LogInfo("EndlessRunner", "Game::teardownGL()");
 	}
 }
@@ -367,26 +370,26 @@ void Game::drawRect(float x, float y, float width, float height) const {
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
 
     float uv[] = {
-        0.0f, 1.0f,
         0.0f, 0.0f,
-        1.0f, 1.0f,
-        1.0f, 0.0f
+        0.0f, 1.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f
     };
-    glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
+    //glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
     glBufferSubData(GL_ARRAY_BUFFER, sizeof(vertices), sizeof(uv), uv);
 
     unsigned int indices[] = {
         0, 1, 3,
         0, 3, 2
     };
-    glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
+    //glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
     glBufferSubData(GL_ARRAY_BUFFER, sizeof(vertices) + sizeof(uv),
                     sizeof(indices), indices);
 
-    glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
+    //glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
     glVertexAttribPointer(glGetAttribLocation(program_handle_, "a_position"), 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
     glEnableVertexAttribArray(glGetAttribLocation(program_handle_, "a_position"));
-    glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
+    //glBindBuffer(GL_ARRAY_BUFFER, buffer_id_);
     glVertexAttribPointer(glGetAttribLocation(program_handle_, "a_uv"), 2, GL_FLOAT, GL_FALSE, 0, (void*)sizeof(vertices));
     glEnableVertexAttribArray(glGetAttribLocation(program_handle_, "a_uv"));
 
