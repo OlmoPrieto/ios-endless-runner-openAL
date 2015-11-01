@@ -9,6 +9,7 @@
 #import "GameViewController.h"
 
 #import "AVFoundation/AVAudioSession.h"
+#import "AVFoundation/AVAudioPlayer.h"
 
 #import "GameWrapper.h"
 
@@ -20,6 +21,10 @@
 @property (strong, nonatomic) UILabel *main_menu_text;
 @property (strong, nonatomic) UILabel *current_score;
 @property (strong, nonatomic) UILabel *best_score;
+
+@property (strong, nonatomic) AVAudioPlayer *musicPlayer;
+
+@property (nonatomic) BOOL is_first_play;
 
 - (void)setupGL;
 - (void)tearDownGL;
@@ -43,6 +48,18 @@
 	
 	// Initialize Audio Session
 	[self initAudioSession];
+    
+    
+    // Background sound music
+    NSError *error = nil;
+    self.musicPlayer = [AVAudioPlayer alloc];
+    NSString *bg_sound_path = [[NSBundle mainBundle] pathForResource:@"bgmusic" ofType:@"mp3"];
+    NSURL *bg_sound_url = [[NSURL alloc] initFileURLWithPath:bg_sound_path];
+    [self.musicPlayer initWithContentsOfURL:bg_sound_url error:&error];
+    if (error) {
+        NSLog(@"Error loading Background music");
+    }
+    
 	
     // Create GameWrapper
     self.gameWrapper = [[GameWrapper alloc] init];
@@ -64,6 +81,8 @@
     self.best_score = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 20, 15)];
   
     [self.gameWrapper initializeWithWidth:(width*scale) andHeight:(height*scale)];
+    
+    self.is_first_play = true;
 }
 
 - (void)dealloc
@@ -130,6 +149,13 @@
         self.main_menu_text.backgroundColor = [UIColor clearColor];
         [self.view addSubview:self.main_menu_text];
     }else if(current_scene == 1){ // Game
+        
+        if(self.is_first_play){
+            // Play Sound if is playing
+            [self.musicPlayer play];
+            self.is_first_play = false;
+        }
+        
         // Remove other labels
         [self.main_menu_text removeFromSuperview];
         [self.current_score removeFromSuperview];
@@ -179,8 +205,8 @@
   
   for(UITouch *touch in touches) {
     CGPoint origTouchPos = [touch locationInView: touch.view];
-    NSLog(@"TouchBegan (%u): %f %f", [touch hash], origTouchPos.x, origTouchPos.y);
-    [[self gameWrapper] screenTouched];
+      unsigned char current_scene = [[self gameWrapper] current_scene];
+      [[self gameWrapper] screenTouched];
   }
 }
 
