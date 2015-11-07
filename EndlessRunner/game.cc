@@ -95,6 +95,7 @@ void Game::initialize(int width, int height) {
     support::PlayMusic(support::LoadMusic("bgmusic.mp3"));
     
     
+    
     current_scene_ = SCENE_MENU;
     
     

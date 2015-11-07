@@ -24,11 +24,21 @@ bool Player::jumping()const{
   return is_jumping_;
 }
 
+void Player::is_grounded(bool grounded){
+    Object::is_grounded(grounded);
+    if(grounded){
+        played_jump_sound_ = false;
+    }
+}
 
 void Player::update(){
     Object::update();
     
     if(jumping()){
+        if(!played_jump_sound_){
+            support::PlaySound(support::LoadSound("jump.mp3"));
+            played_jump_sound_ = true;
+        }
         is_grounded(false);
         set_y( y() + 20.0f );
     }
