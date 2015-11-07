@@ -34,6 +34,7 @@ void* LoadMusic(const char* file);
 void ReleaseMusic(void* music_player);
 bool PlayMusic(void* music_player);
 void PauseMusic(void* music_player);
+void RestartMusic(void* music_player);
 bool IsMusicPlaying(void* music_player);
 
 // Functions for sounds

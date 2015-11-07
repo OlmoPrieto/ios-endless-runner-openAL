@@ -87,6 +87,9 @@ class Game {
     
     void restartGameValues();
     
+    // Music
+    void* background_music;
+    
     // boxes
     std::vector<Obstacle> obstacle_pool_;
 

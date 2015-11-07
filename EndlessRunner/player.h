@@ -24,9 +24,13 @@ public:
   void update();
   void is_jumping(bool jumping);
   bool jumping()const;
+    void die();
+    void is_alive(bool alive);
+    bool alive()const;
     void is_grounded(bool grounded);
     
 private:
+    bool is_alive_ = true;
     float is_jumping_;
    
     bool played_jump_sound_ = false;

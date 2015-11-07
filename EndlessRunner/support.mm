@@ -317,15 +317,25 @@ bool PlayMusic(void* music_player){
     return [mp play];
 }
 
+void RestartMusic(void* music_player){
+    AVAudioPlayer* mp = (__bridge AVAudioPlayer*)music_player;
+    [mp stop];
+    mp.currentTime = 0;
+}
+
 void PauseMusic(void* music_player)
 {
-	
+    AVAudioPlayer* mp = (__bridge AVAudioPlayer*)music_player;
+    
+    return [mp pause];
 }
 
 bool IsMusicPlaying(void* music_player)
 {
     
-	return false;
+    AVAudioPlayer* mp = (__bridge AVAudioPlayer*)music_player;
+    
+    return [mp isPlaying];
 }
 	
 void* LoadSound(const char* file)

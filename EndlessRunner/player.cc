@@ -31,6 +31,19 @@ void Player::is_grounded(bool grounded){
     }
 }
 
+void Player::is_alive(bool alive){
+    is_alive_ = alive;
+}
+
+bool Player::alive()const{
+    return is_alive_;
+}
+
+void Player::die(){
+    is_alive(false);
+    support::PlaySound(support::LoadSound("player_dead_sound.mp3"));
+}
+
 void Player::update(){
     Object::update();
     

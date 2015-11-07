@@ -92,8 +92,7 @@ void Game::initialize(int width, int height) {
     utils::LogInfo("EndlessRunner", "Game::initialize(%d, %d)", width_, height_);
     
     // Main Music
-    support::PlayMusic(support::LoadMusic("bgmusic.mp3"));
-    
+    background_music = support::LoadMusic("bgmusic.mp3");
     
     
     current_scene_ = SCENE_MENU;
@@ -135,10 +134,14 @@ void Game::restartGameValues(){
     player.set_position(100.0f, floor_height_ + player.height() + 100.0f);
     player.isAffectedByGravity(true);
     player.is_grounded(false);
+    player.is_alive(true);
     
     for (int i = 0; i < max_obstacles_; ++i) {
         obstacle_pool_[i].set_position(20000.0f, floor_height_ + 100.0f);
     }
+    
+    // Restart music
+    support::RestartMusic(background_music);
     
     // reset timer
     secs_last_update_ = 0.0;
@@ -180,7 +183,13 @@ void Game::update() {
     if(current_scene_ == SCENE_MENU){
     
     }else if(current_scene_ == SCENE_GAME){
-	
+        score_++;
+        
+        if(!support::IsMusicPlaying(background_music)){
+            support::PlayMusic(background_music);
+        }
+        
+        
         // utils::LogInfo("EndlessRunner", "Game update.");
 	
         // Calculate time since last update
@@ -239,7 +248,6 @@ void Game::update() {
         // Player gravity
         if(player.y() <= floor_y_pos_ + player.height()){
             player.is_grounded(true);
-            //player.is_jumping(false);
         }
   
         // Update objects
@@ -252,13 +260,13 @@ void Game::update() {
                 obs = &obstacle_pool_[i];
                 if (Object::colliding(player, *obs)) {
                     utils::LogDebug("COLLISIONS", "Player is colliding!\n");
+                    player.die();
                     endGame();
                 }
             }
         }
 
-        //utils::LogDebug("Score", "%d\n", score_);
-        score_++;
+        
     
     } // SCENE GAME
     else if(current_scene_ == SCENE_END){
@@ -413,11 +421,12 @@ int Game::best_score(){
   
 void Game::endGame(){
     set_best_score(score_);
+    support::PauseMusic(background_music);
     current_scene_ = SCENE_END;
 }
     
 void Game::set_best_score(int score){
-    if(score > best_score()){
+    if(score >= best_score()){
         hi_score_ = score;
     }
 }

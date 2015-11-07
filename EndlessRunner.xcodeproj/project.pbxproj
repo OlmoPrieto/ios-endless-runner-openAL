@@ -25,6 +25,7 @@
 		8226FDB81BDD749200913384 /* player.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8226FDB41BDD749200913384 /* player.cc */; settings = {ASSET_TAGS = (); }; };
 		82508F241BE0169800AB3404 /* player_texture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82508F231BE0169800AB3404 /* player_texture.jpg */; settings = {ASSET_TAGS = (); }; };
 		82E54D791BEE636700F39C11 /* jump.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 82E54D781BEE636700F39C11 /* jump.mp3 */; settings = {ASSET_TAGS = (); }; };
+		82E54D7B1BEE65E700F39C11 /* player_dead_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 82E54D7A1BEE65E700F39C11 /* player_dead_sound.mp3 */; settings = {ASSET_TAGS = (); }; };
 		82EBB5151BE642270008F0F6 /* bgmusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 82EBB5141BE642270008F0F6 /* bgmusic.mp3 */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
@@ -70,6 +71,7 @@
 		8226FDB51BDD749200913384 /* player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = player.h; sourceTree = "<group>"; };
 		82508F231BE0169800AB3404 /* player_texture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = player_texture.jpg; sourceTree = "<group>"; };
 		82E54D781BEE636700F39C11 /* jump.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = jump.mp3; sourceTree = "<group>"; };
+		82E54D7A1BEE65E700F39C11 /* player_dead_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = player_dead_sound.mp3; sourceTree = "<group>"; };
 		82EBB5141BE642270008F0F6 /* bgmusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bgmusic.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -112,6 +114,7 @@
 		245C8E851BBE6FB10019BDC6 /* EndlessRunner */ = {
 			isa = PBXGroup;
 			children = (
+				82E54D7A1BEE65E700F39C11 /* player_dead_sound.mp3 */,
 				82E54D781BEE636700F39C11 /* jump.mp3 */,
 				82EBB5141BE642270008F0F6 /* bgmusic.mp3 */,
 				82508F231BE0169800AB3404 /* player_texture.jpg */,
@@ -247,6 +250,7 @@
 				82EBB5151BE642270008F0F6 /* bgmusic.mp3 in Resources */,
 				245C8E971BBE6FB10019BDC6 /* Assets.xcassets in Resources */,
 				245C8E9A1BBE6FB10019BDC6 /* LaunchScreen.storyboard in Resources */,
+				82E54D7B1BEE65E700F39C11 /* player_dead_sound.mp3 in Resources */,
 				82508F241BE0169800AB3404 /* player_texture.jpg in Resources */,
 				245C8E8D1BBE6FB10019BDC6 /* Shader.fsh in Resources */,
 			);

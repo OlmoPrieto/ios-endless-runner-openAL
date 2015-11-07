@@ -140,7 +140,7 @@
         
         // Score
         self.score_text.text = [NSString stringWithFormat:@"Score:  %d", [[self gameWrapper] score]];
-        self.score_text.frame = CGRectMake(75, 35, 160, 20);
+        self.score_text.frame = CGRectMake(75, 35, 300, 20);
         self.score_text.font=[UIFont boldSystemFontOfSize:25.0];
         self.score_text.textColor=[UIColor whiteColor];
         self.score_text.backgroundColor=[UIColor clearColor];
@@ -150,13 +150,13 @@
         [self.main_menu_text removeFromSuperview];
         
         self.current_score.text = [NSString stringWithFormat:@"Game Score  %d", [[self gameWrapper] score]];
-        self.current_score.frame = CGRectMake(90, 50, 200, 100);
+        self.current_score.frame = CGRectMake(90, 50, 300, 100);
         self.current_score.font=[UIFont boldSystemFontOfSize:25.0];
         self.current_score.textColor=[UIColor whiteColor];
         self.current_score.backgroundColor=[UIColor clearColor];
         
         self.best_score.text = [NSString stringWithFormat:@"Best Score  %d", [[self gameWrapper] best_score]];
-        self.best_score.frame = CGRectMake(90, 100, 200, 100);
+        self.best_score.frame = CGRectMake(90, 100, 300, 100);
         self.best_score.font=[UIFont boldSystemFontOfSize:25.0];
         self.best_score.textColor=[UIColor whiteColor];
         self.best_score.backgroundColor=[UIColor clearColor];
