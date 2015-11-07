@@ -24,15 +24,13 @@ bool Player::jumping()const{
   return is_jumping_;
 }
 
-void Player::jump(){
-  
-  if(grounded() && !jumping()){
-    is_jumping(true);
-    is_grounded(false);
+
+void Player::update(){
+    Object::update();
     
-    // Change this
-    set_y(600.0f);
+    if(jumping()){
+        is_grounded(false);
+        set_y( y() + 20.0f );
+    }
     
-  }
-  
 }

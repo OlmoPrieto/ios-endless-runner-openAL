@@ -182,10 +182,23 @@
   
   for(UITouch *touch in touches) {
     CGPoint origTouchPos = [touch locationInView: touch.view];
-      unsigned char current_scene = [[self gameWrapper] current_scene];
+      //unsigned char current_scene = [[self gameWrapper] current_scene];
+      NSLog(@"TOUCH");
+      [[self gameWrapper] touchDownAtPosX:origTouchPos.x posY:origTouchPos.y];
       [[self gameWrapper] screenTouched];
   }
 }
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+    
+    for(UITouch *touch in touches) {
+        CGPoint origTouchPos = [touch locationInView: touch.view];
+        //unsigned char current_scene = [[self gameWrapper] current_scene];
+        NSLog(@"END TOUCH");
+        [[self gameWrapper] touchUpAtPosX:origTouchPos.x posY:origTouchPos.y];
+    }
+}
+
 
 #pragma mark - AVAudioSession and AVAudioSessionDelegate delegate methods
 - (void)initAudioSession

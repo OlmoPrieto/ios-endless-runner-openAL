@@ -21,7 +21,7 @@ public:
   ~Player(){};
   
   void init();
-  void jump();
+  void update();
   void is_jumping(bool jumping);
   bool jumping()const;
   

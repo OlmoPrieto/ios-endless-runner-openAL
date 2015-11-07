@@ -144,22 +144,22 @@ void Game::restartGameValues(){
 }
 
 void Game::touchDownAt(float x, float y) {
-
+    player.is_jumping(true);
 }
 	
 void Game::touchUpAt(float x, float y) {
+    player.is_jumping(false);
 }
   
 void Game::screenTouched(){
     if(current_scene_ == SCENE_MENU){
         current_scene_ = SCENE_GAME;
     }else if(current_scene_ == SCENE_GAME){
-        player.jump();
+        
     }else if(current_scene_ == SCENE_END){
         current_scene_ = SCENE_MENU;
         restartGameValues();
     }
-  
 }
 
 void Game::pause() {
@@ -238,7 +238,7 @@ void Game::update() {
         // Player gravity
         if(player.y() <= floor_y_pos_ + player.height()){
             player.is_grounded(true);
-            player.is_jumping(false);
+            //player.is_jumping(false);
         }
   
         // Update objects
@@ -422,7 +422,8 @@ void Game::set_best_score(int score){
 }
 
 bool Game::loadShaders() {
-	glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
+    
+	glClearColor(126 / 255.0f, 192 / 255.0f, 238 / 255.0f , 1.0f);
 	
 	// shaders
 	const char *vert_shader_str = support::LoadVertexShader();
