@@ -19,6 +19,8 @@
 namespace support {
 
 const unsigned int kMaxTextureSize = 1024;
+    
+
 
 typedef enum {
 	kGLTexturePixelFormat_Automatic = 0,
@@ -277,23 +279,42 @@ void* LoadOpenALAudioData(const char* file, ALsizei *out_data_size, ALenum *out_
 
 
 const char* PathToFileInDocuments(const char* file) {
-	return NULL;
+	
+    
+    return NULL;
 }
 
 
 void* LoadMusic(const char* file)
 {
-	return NULL;
+    AVAudioPlayer* musicPlayer;
+    
+    NSError *error = nil;
+    musicPlayer = [AVAudioPlayer alloc];
+    
+    NSString *fileNS =[NSString stringWithUTF8String:file];
+    NSString *fileName = [[fileNS lastPathComponent] stringByDeletingPathExtension];
+    NSString *fileType = [fileNS pathExtension];
+    NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:fileType];
+    NSURL *fileUrl = [[NSURL alloc] initFileURLWithPath:path];
+
+    [musicPlayer initWithContentsOfURL:fileUrl error:&error];
+    
+    if (error) {
+        NSLog(@"Error loading Background music");
+    }
+	return (__bridge_retained void*)musicPlayer;
 }
 
 void ReleaseMusic(void* music_player)
 {
-	
+	AVAudioPlayer* mp = (__bridge_transfer AVAudioPlayer*)music_player;
 }
 
-bool PlayMusic(void* music_player)
-{
-	return false;
+bool PlayMusic(void* music_player){
+    AVAudioPlayer* mp = (__bridge AVAudioPlayer*)music_player;
+    
+    return [mp play];
 }
 
 void PauseMusic(void* music_player)

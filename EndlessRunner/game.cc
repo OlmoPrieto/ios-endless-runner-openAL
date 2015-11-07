@@ -91,6 +91,10 @@ void Game::initialize(int width, int height) {
     
     utils::LogInfo("EndlessRunner", "Game::initialize(%d, %d)", width_, height_);
     
+    // Main Music
+    support::PlayMusic(support::LoadMusic("bgmusic.mp3"));
+    
+    
     current_scene_ = SCENE_MENU;
     
     
