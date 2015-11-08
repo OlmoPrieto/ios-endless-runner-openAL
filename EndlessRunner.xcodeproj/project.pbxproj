@@ -27,6 +27,8 @@
 		82E54D791BEE636700F39C11 /* jump.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 82E54D781BEE636700F39C11 /* jump.mp3 */; settings = {ASSET_TAGS = (); }; };
 		82E54D7B1BEE65E700F39C11 /* player_dead_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 82E54D7A1BEE65E700F39C11 /* player_dead_sound.mp3 */; settings = {ASSET_TAGS = (); }; };
 		82EBB5151BE642270008F0F6 /* bgmusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 82EBB5141BE642270008F0F6 /* bgmusic.mp3 */; settings = {ASSET_TAGS = (); }; };
+		F58B81DC1BEFD94B0091483B /* goomba.png in Resources */ = {isa = PBXBuildFile; fileRef = F58B81DB1BEFD94B0091483B /* goomba.png */; settings = {ASSET_TAGS = (); }; };
+		F58B81DE1BEFE51D0091483B /* koopa.png in Resources */ = {isa = PBXBuildFile; fileRef = F58B81DD1BEFE51D0091483B /* koopa.png */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +75,8 @@
 		82E54D781BEE636700F39C11 /* jump.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = jump.mp3; sourceTree = "<group>"; };
 		82E54D7A1BEE65E700F39C11 /* player_dead_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = player_dead_sound.mp3; sourceTree = "<group>"; };
 		82EBB5141BE642270008F0F6 /* bgmusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bgmusic.mp3; sourceTree = "<group>"; };
+		F58B81DB1BEFD94B0091483B /* goomba.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goomba.png; sourceTree = "<group>"; };
+		F58B81DD1BEFE51D0091483B /* koopa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = koopa.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +118,8 @@
 		245C8E851BBE6FB10019BDC6 /* EndlessRunner */ = {
 			isa = PBXGroup;
 			children = (
+				F58B81DD1BEFE51D0091483B /* koopa.png */,
+				F58B81DB1BEFD94B0091483B /* goomba.png */,
 				82E54D7A1BEE65E700F39C11 /* player_dead_sound.mp3 */,
 				82E54D781BEE636700F39C11 /* jump.mp3 */,
 				82EBB5141BE642270008F0F6 /* bgmusic.mp3 */,
@@ -249,9 +255,11 @@
 				82E54D791BEE636700F39C11 /* jump.mp3 in Resources */,
 				82EBB5151BE642270008F0F6 /* bgmusic.mp3 in Resources */,
 				245C8E971BBE6FB10019BDC6 /* Assets.xcassets in Resources */,
+				F58B81DE1BEFE51D0091483B /* koopa.png in Resources */,
 				245C8E9A1BBE6FB10019BDC6 /* LaunchScreen.storyboard in Resources */,
 				82E54D7B1BEE65E700F39C11 /* player_dead_sound.mp3 in Resources */,
 				82508F241BE0169800AB3404 /* player_texture.jpg in Resources */,
+				F58B81DC1BEFD94B0091483B /* goomba.png in Resources */,
 				245C8E8D1BBE6FB10019BDC6 /* Shader.fsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

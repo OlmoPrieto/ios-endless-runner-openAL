@@ -8,6 +8,8 @@
 
 #include "player.h"
 
+unsigned int Player::texture_id_ = 0;
+
 Player::Player(){
   init();
 }

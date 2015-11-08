@@ -17,17 +17,19 @@
 
 class Player : public Object{
 public:
-  Player();
-  ~Player(){};
+    Player();
+    ~Player(){};
   
-  void init();
-  void update();
-  void is_jumping(bool jumping);
-  bool jumping()const;
+    void init();
+    void update();
+    void is_jumping(bool jumping);
+    bool jumping()const;
     void die();
     void is_alive(bool alive);
     bool alive()const;
     void is_grounded(bool grounded);
+
+    static unsigned int texture_id_;
     
 private:
     bool is_alive_ = true;

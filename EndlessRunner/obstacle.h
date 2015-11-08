@@ -30,6 +30,10 @@ public:
 
     void update(float dt);
 
+    static unsigned int texture_id_;
+    static unsigned int texture_goomba_;
+    static unsigned int texture_koopa_;
+
 private:
     float speed_;
     bool available_;

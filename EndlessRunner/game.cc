@@ -46,14 +46,14 @@ void Game::setupGL() {
 	
 	loadShaders();
 
-    GLuint texture_id;
-    glGenTextures(1, &texture_id);
-    glBindTexture(GL_TEXTURE_2D, texture_id);
+    // Textures
+    glGenTextures(1, &Player::texture_id_);
+    glBindTexture(GL_TEXTURE_2D, Player::texture_id_);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    player.set_texture_id(texture_id);
+
     int width, height;
     bool has_alpha;
     player.set_texture(support::LoadImageFile("player_texture.jpg", &width, &height,
@@ -64,6 +64,32 @@ void Game::setupGL() {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE,
                  player.texture_handler());
     glGenerateMipmap(GL_TEXTURE_2D);
+
+    glGenTextures(1, &Obstacle::texture_goomba_);
+    glBindTexture(GL_TEXTURE_2D, Obstacle::texture_goomba_);
+    unsigned char *texture_data = support::LoadImageFile("goomba.png", &width, &height,
+                                                         &has_alpha);
+    if (texture_data == NULL) {
+        utils::LogDebug("errors", "FAILED TO LOAD OBSTACLE TEXTURE\n");
+    }
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE,
+                 texture_data);
+    glGenerateMipmap(GL_TEXTURE_2D);
+
+    glGenTextures(1, &Obstacle::texture_koopa_);
+    glBindTexture(GL_TEXTURE_2D, Obstacle::texture_koopa_);
+    unsigned char *texture_data2 = support::LoadImageFile("koopa.png", &width, &height,
+                                                         &has_alpha);
+    if (texture_data == NULL) {
+        utils::LogDebug("errors", "FAILED TO LOAD OBSTACLE TEXTURE\n");
+    }
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE,
+                 texture_data2);
+    glGenerateMipmap(GL_TEXTURE_2D);
+
+    Obstacle::texture_id_ = Obstacle::texture_goomba_;
+    free(texture_data);
+    free(texture_data2);
 
 	is_opengl_init_ = true;
 }
@@ -78,6 +104,13 @@ void Game::teardownGL() {
 		}
         if (buffer_id_) {
             glDeleteBuffers(1, &buffer_id_);
+        }
+        if (Player::texture_id_) {
+            glDeleteTextures(1, &Player::texture_id_);
+        }
+        if (Obstacle::texture_id_) {
+            glDeleteTextures(1, &Obstacle::texture_goomba_);
+            glDeleteTextures(1, &Obstacle::texture_koopa_);
         }
 		utils::LogInfo("EndlessRunner", "Game::teardownGL()");
 	}
@@ -138,6 +171,7 @@ void Game::restartGameValues(){
     
     for (int i = 0; i < max_obstacles_; ++i) {
         obstacle_pool_[i].set_position(20000.0f, floor_height_ + 100.0f);
+        obstacle_pool_[i].set_availability(true);
     }
     
     // Restart music
@@ -229,9 +263,15 @@ void Game::update() {
                 if (obs->available()) {
                     obs->set_availability(false);
                     obs->set_x(1000.0f);
-                    color[0] = static_cast<float>(rand()) / static_cast<float> (RAND_MAX);
-                    color[1] = static_cast<float>(rand()) / static_cast<float> (RAND_MAX);
-                    color[2] = static_cast<float>(rand()) / static_cast<float> (RAND_MAX);
+                    if (rand() % 20 < 10) {
+                        obs->set_y(400.0f);
+                        Obstacle::texture_id_ = Obstacle::texture_koopa_;
+                    } else {
+                        Obstacle::texture_id_ = Obstacle::texture_goomba_;
+                    }
+                    //color[0] = static_cast<float>(rand()) / static_cast<float> (RAND_MAX);
+                    //color[1] = static_cast<float>(rand()) / static_cast<float> (RAND_MAX);
+                    //color[2] = static_cast<float>(rand()) / static_cast<float> (RAND_MAX);
                     obs->set_color(color);
                     break;
                 }
@@ -315,6 +355,9 @@ void Game::drawCharacter() {
     glUniform3f(glGetUniformLocation(program_handle_, "u_color"), 0.1f, 1.0f, 0.4f);
     glUniform1i(glGetUniformLocation(program_handle_, "has_texture"), 1);
 
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, Player::texture_id_);
+    glUniform1i(glGetUniformLocation(program_handle_, "u_texture"), 0);
     drawRect(player.x(), player.y(), player.width(), player.height());
 }
     
@@ -328,36 +371,17 @@ void Game::drawBoxes() {
                         obs->color()[0],
                         obs->color()[1],
                         obs->color()[2]);
-            glUniform1i(glGetUniformLocation(program_handle_, "has_texture"), 0);
+            glUniform1i(glGetUniformLocation(program_handle_, "has_texture"), 1);
+            glActiveTexture(GL_TEXTURE1);
+            if (obs->y() < 400) {
+                glBindTexture(GL_TEXTURE_2D, Obstacle::texture_goomba_);
+            } else {
+                glBindTexture(GL_TEXTURE_2D, Obstacle::texture_koopa_);
+            }
+            glUniform1i(glGetUniformLocation(program_handle_, "u_texture"), 1);
             drawRect(obs->x(), obs->y(), obs->width(), obs->height());
         }
     }
-}
-	
-// TODO(Students) Bad implemented, reimplement!!!!
-void Game::drawRectBad(float x, float y, float width, float height) const {
-	// Ortho matrix
-	GLfloat matrix_ortho[] = {2.0f/width_, 0.0f, 0.0f, 0.0f,
-							  0.0f, 2.0f/height_, 0.0f, 0.0f,
-							  0.0f, 0.0f, -1.f, 0.0f,
-							 -1.0f, -1.0f, -0.0f, 1.0f};
-	
-	// Set model view projection matrix
-	glUniformMatrix4fv(uniform_mvp_matrix_, 1, 0, matrix_ortho);
-
-	
-	// Vertices
-	GLfloat vertices[] = {x, y-height, 0.0f,
-						  x+width, y-height, 0.0f,
-						  x, y, 0.0f,
-						  x+width, y, 0.0f};
-	
-	// Load the vertex data
-	glEnableVertexAttribArray(attribute_position_);
-	glVertexAttribPointer(attribute_position_, 3, GL_FLOAT, GL_FALSE, 0,
-						  vertices);
-		
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
 void Game::drawRect(float x, float y, float width, float height) const {
@@ -369,9 +393,6 @@ void Game::drawRect(float x, float y, float width, float height) const {
 
     // Set model view projection matrix
     glUniformMatrix4fv(uniform_mvp_matrix_, 1, 0, matrix_ortho);
-
-    // activate the only texture by now
-    glBindTexture(GL_TEXTURE_2D, player.texture_id());
 
     float vertices[] = {
         x, y, 0.0f,

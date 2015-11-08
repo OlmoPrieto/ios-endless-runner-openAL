@@ -8,6 +8,10 @@
 
 #include "obstacle.h"
 
+unsigned int Obstacle::texture_id_ = 0;
+unsigned int Obstacle::texture_goomba_ = 0;
+unsigned int Obstacle::texture_koopa_ = 0;
+
 Obstacle::Obstacle() {
     speed_ = 0.0f;
 }
