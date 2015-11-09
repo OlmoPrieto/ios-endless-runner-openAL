@@ -183,7 +183,7 @@
   for(UITouch *touch in touches) {
     CGPoint origTouchPos = [touch locationInView: touch.view];
       //unsigned char current_scene = [[self gameWrapper] current_scene];
-      NSLog(@"TOUCH");
+      //NSLog(@"TOUCH");
       [[self gameWrapper] touchDownAtPosX:origTouchPos.x posY:origTouchPos.y];
       [[self gameWrapper] screenTouched];
   }
@@ -194,7 +194,7 @@
     for(UITouch *touch in touches) {
         CGPoint origTouchPos = [touch locationInView: touch.view];
         //unsigned char current_scene = [[self gameWrapper] current_scene];
-        NSLog(@"END TOUCH");
+        //NSLog(@"END TOUCH");
         [[self gameWrapper] touchUpAtPosX:origTouchPos.x posY:origTouchPos.y];
     }
 }

@@ -218,6 +218,9 @@ void Game::update() {
     
     }else if(current_scene_ == SCENE_GAME){
         score_++;
+        if (score_ % 300 == 0) {
+            Obstacle::speed_ += 5.0f;
+        }
         
         if(!support::IsMusicPlaying(background_music)){
             support::PlayMusic(background_music);
@@ -263,7 +266,7 @@ void Game::update() {
                 if (obs->available()) {
                     obs->set_availability(false);
                     obs->set_x(1000.0f);
-                    if (rand() % 20 < 10) {
+                    if (rand() % 20 < 5) {
                         obs->set_y(400.0f);
                         Obstacle::texture_id_ = Obstacle::texture_koopa_;
                     } else {

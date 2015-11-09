@@ -11,9 +11,10 @@
 unsigned int Obstacle::texture_id_ = 0;
 unsigned int Obstacle::texture_goomba_ = 0;
 unsigned int Obstacle::texture_koopa_ = 0;
+float Obstacle::speed_ = 0.0f;
 
 Obstacle::Obstacle() {
-    speed_ = 0.0f;
+
 }
 
 Obstacle::~Obstacle() {
@@ -59,6 +60,7 @@ void Obstacle::update(float dt) {
     x_ -= speed_ * dt * 4;
     if (x_ < 0.0f - (width_ + width_ / 2.0f)) {
         x_ = 20000.0f;
+        y_ = 50.f + height_;
         available_ = true;
     }
 }

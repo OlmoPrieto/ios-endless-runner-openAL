@@ -34,8 +34,9 @@ public:
     static unsigned int texture_goomba_;
     static unsigned int texture_koopa_;
 
-private:
-    float speed_;
+    static float speed_;
+
+private: 
     bool available_;
     float color_[3];
 };
