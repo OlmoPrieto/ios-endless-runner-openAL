@@ -277,11 +277,20 @@ void* LoadOpenALAudioData(const char* file, ALsizei *out_data_size, ALenum *out_
 	return theData;
 }
 
-
 const char* PathToFileInDocuments(const char* file) {
-	
-    
-    return NULL;
+    NSString *_file = [NSString stringWithUTF8String:file];
+
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *path_to_documents = [paths objectAtIndex:0];
+
+    NSString *full_path = [NSString stringWithFormat:@"%@/%@", path_to_documents, _file];
+
+    if (full_path == nil) {
+        utils::LogDebug("Errors", "Could not find file resource '%@'", _file);
+        return NULL;
+    }
+
+    return [full_path UTF8String];
 }
 
 

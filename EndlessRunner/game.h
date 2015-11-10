@@ -72,6 +72,7 @@ class Game {
     
     float floor_one_x_position_;
     float floor_two_x_position_;
+    unsigned int floor_texture_id_;
     
     // Character variables
     float char_x_;

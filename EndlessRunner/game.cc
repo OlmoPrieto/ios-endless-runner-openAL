@@ -11,6 +11,8 @@
 #include <OpenGLES/ES2/gl.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include <string>
+#include <stdio.h>
 
 #include "support.h"
 #include "utils.h"
@@ -80,16 +82,28 @@ void Game::setupGL() {
     glBindTexture(GL_TEXTURE_2D, Obstacle::texture_koopa_);
     unsigned char *texture_data2 = support::LoadImageFile("koopa.png", &width, &height,
                                                          &has_alpha);
-    if (texture_data == NULL) {
+    if (texture_data2 == NULL) {
         utils::LogDebug("errors", "FAILED TO LOAD OBSTACLE TEXTURE\n");
     }
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE,
                  texture_data2);
     glGenerateMipmap(GL_TEXTURE_2D);
 
+    glGenTextures(1, &floor_texture_id_);
+    glBindTexture(GL_TEXTURE_2D,floor_texture_id_);
+    unsigned char *texture_data3 = support::LoadImageFile("bricks.png", &width, &height,
+                                                          &has_alpha);
+    if (texture_data3 == NULL) {
+        utils::LogDebug("errors", "FAILED TO LOAD OBSTACLE TEXTURE\n");
+    }
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE,
+                 texture_data3);
+    glGenerateMipmap(GL_TEXTURE_2D);
+
     Obstacle::texture_id_ = Obstacle::texture_goomba_;
     free(texture_data);
     free(texture_data2);
+    free(texture_data3);
 
 	is_opengl_init_ = true;
 }
@@ -112,6 +126,9 @@ void Game::teardownGL() {
             glDeleteTextures(1, &Obstacle::texture_goomba_);
             glDeleteTextures(1, &Obstacle::texture_koopa_);
         }
+        if (floor_texture_id_) {
+            glDeleteTextures(1, &floor_texture_id_);
+        }
 		utils::LogInfo("EndlessRunner", "Game::teardownGL()");
 	}
 }
@@ -129,8 +146,7 @@ void Game::initialize(int width, int height) {
     
     
     current_scene_ = SCENE_MENU;
-    
-    
+
     max_obstacles_ = 6;
     obstacle_pool_.reserve(max_obstacles_);
     for (int i = 0; i < max_obstacles_; ++i) {
@@ -203,11 +219,114 @@ void Game::screenTouched(){
 void Game::pause() {
 	is_paused_ = true;
 	utils::LogInfo("EndlessRunner", "Game::pause()");
+    const char *path = support::PathToFileInDocuments("save.txt");
+    FILE *f = fopen(path, "w");
+    if (f != NULL) {
+        fprintf(f, "%f\n", secs_last_update_);
+        fprintf(f, "%u\n", max_obstacles_);
+        fprintf(f, "%u\n", current_scene_);
+        fprintf(f, "%u\n", hi_score_);
+        fprintf(f, "%u\n", score_);
+        fprintf(f, "%f\n", floor_x_pos_);
+        fprintf(f, "%f\n", floor_y_pos_);
+        fprintf(f, "%f\n", floor_width_);
+        fprintf(f, "%f\n", floor_height_);
+        fprintf(f, "%f\n", floor_one_x_position_);
+        fprintf(f, "%f\n", floor_two_x_position_);
+        fprintf(f, "%f\n", player.x());
+        fprintf(f, "%f\n", player.y());
+        fprintf(f, "%f\n", player.width());
+        fprintf(f, "%f\n", player.height());
+        fprintf(f, "%u\n", player.alive());
+        fprintf(f, "%u\n", player.jumping());
+        fprintf(f, "%f\n", Obstacle::speed_);
+        for (int i = 0; i < max_obstacles_; ++i) {
+            fprintf(f, "%f\n", obstacle_pool_[i].x());
+            fprintf(f, "%f\n", obstacle_pool_[i].y());
+            fprintf(f, "%f\n", obstacle_pool_[i].width());
+            fprintf(f, "%f\n", obstacle_pool_[i].height());
+            fprintf(f, "%u\n", obstacle_pool_[i].available());
+        }
+
+        fclose(f);
+    } else {
+        utils::LogDebug("Errors", "Failed to open save.txt to save data\n");
+    }
 }
 
 void Game::resume() {
-	is_paused_ = false;
+	//is_paused_ = false;
 	utils::LogInfo("EndlessRunner", "Game::resume()");
+    if (is_paused_) {
+        is_paused_ = false;
+
+    const char *path = support::PathToFileInDocuments("save.txt");
+    FILE *f = fopen(path, "r");
+    if (f != NULL) {
+        fscanf(f, "%lf", &secs_last_update_);
+        fscanf(f, "%u", &max_obstacles_);
+        unsigned int scene;
+        fscanf(f, "%u", &scene);
+        switch (scene) {
+            case 0: {
+                current_scene_ = SCENE_MENU;
+                break;
+            }
+            case 1: {
+                current_scene_ = SCENE_GAME;
+                break;
+            }
+            case 2: {
+                current_scene_ = SCENE_END;
+                break;
+            }
+                
+            default:
+                break;
+        }
+        fscanf(f, "%u", &hi_score_);
+        fscanf(f, "%u", &score_);
+        fscanf(f, "%f", &floor_x_pos_);
+        fscanf(f, "%f", &floor_y_pos_);
+        fscanf(f, "%f", &floor_width_);
+        fscanf(f, "%f", &floor_height_);
+        fscanf(f, "%f", &floor_one_x_position_);
+        fscanf(f, "%f", &floor_two_x_position_);
+        float data;
+        fscanf(f, "%f", &data);
+        player.set_x(data);
+        fscanf(f, "%f", &data);
+        player.set_y(data);
+        fscanf(f, "%f", &data);
+        player.set_width(data);
+        fscanf(f, "%f", &data);
+        player.set_height(data);
+        bool bool_data;
+        fscanf(f, "%d", &bool_data);
+        player.is_alive(bool_data);
+        fscanf(f, "%d", &bool_data);
+        player.is_jumping(bool_data);
+        fscanf(f, "%f", &Obstacle::speed_);
+        for (int i = 0; i < max_obstacles_; ++i) {
+            fscanf(f, "%f", &data);
+            obstacle_pool_[i].set_x(data);
+            fscanf(f, "%f", &data);
+            obstacle_pool_[i].set_y(data);
+            fscanf(f, "%f", &data);
+            obstacle_pool_[i].set_width(data);
+            fscanf(f, "%f", &data);
+            obstacle_pool_[i].set_height(data);
+            fscanf(f, "%d", &bool_data);
+            obstacle_pool_[i].set_availability(bool_data);
+        }
+
+        fclose(f);
+
+        update();
+    } else {
+        utils::LogDebug("Errors", "Failed to open save.txt to load data\n");
+    }
+    }// if (is_paused)
 }
 
 
@@ -303,7 +422,7 @@ void Game::update() {
                 obs = &obstacle_pool_[i];
                 if (Object::colliding(player, *obs)) {
                     utils::LogDebug("COLLISIONS", "Player is colliding!\n");
-                    player.die();
+                    //player.die();
                     endGame();
                 }
             }
@@ -350,7 +469,11 @@ unsigned char Game::current_scene()const{
     
 void Game::drawFloor(float pos_x){
     glUniform3f(glGetUniformLocation(program_handle_, "u_color"), 1.0f, 1.0f, 1.0f);
-    glUniform1i(glGetUniformLocation(program_handle_, "has_texture"), 0);
+    glUniform1i(glGetUniformLocation(program_handle_, "has_texture"), 1);
+
+    glActiveTexture(GL_TEXTURE2);
+    glBindTexture(GL_TEXTURE_2D, floor_texture_id_);
+    glUniform1i(glGetUniformLocation(program_handle_, "u_texture"), 2);
     drawRect(pos_x, floor_y_pos_, floor_width_, floor_height_);
 }
 
