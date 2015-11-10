@@ -33,6 +33,7 @@ Game::Game()
 
 Game::~Game() {
 	utils::LogInfo("EndlessRunner", "Game::~Game()");
+    support::ReleaseMusic(background_music);
 }
 
 void Game::setupGL() {
@@ -143,7 +144,8 @@ void Game::initialize(int width, int height) {
     
     // Main Music
     background_music = support::LoadMusic("bgmusic.mp3");
-    
+
+    game_is_paused_ = false;
     
     current_scene_ = SCENE_MENU;
 
@@ -247,7 +249,6 @@ void Game::pause() {
             fprintf(f, "%f\n", obstacle_pool_[i].height());
             fprintf(f, "%u\n", obstacle_pool_[i].available());
         }
-
         fclose(f);
     } else {
         utils::LogDebug("Errors", "Failed to open save.txt to save data\n");
@@ -257,8 +258,6 @@ void Game::pause() {
 void Game::resume() {
 	//is_paused_ = false;
 	utils::LogInfo("EndlessRunner", "Game::resume()");
-    if (is_paused_) {
-        is_paused_ = false;
 
     const char *path = support::PathToFileInDocuments("save.txt");
     FILE *f = fopen(path, "r");
@@ -321,12 +320,17 @@ void Game::resume() {
         }
 
         fclose(f);
-
-        update();
     } else {
         utils::LogDebug("Errors", "Failed to open save.txt to load data\n");
     }
-    }// if (is_paused)
+
+    if (current_scene_ != SCENE_GAME) {
+        current_scene_ = SCENE_MENU;
+        restartGameValues();
+    } else {
+        game_is_paused_ = true;
+        update();
+    }
 }
 
 
@@ -336,6 +340,9 @@ void Game::update() {
     if(current_scene_ == SCENE_MENU){
     
     }else if(current_scene_ == SCENE_GAME){
+
+
+        if(!game_is_paused_){
         score_++;
         if (score_ % 300 == 0) {
             Obstacle::speed_ += 5.0f;
@@ -422,18 +429,15 @@ void Game::update() {
                 obs = &obstacle_pool_[i];
                 if (Object::colliding(player, *obs)) {
                     utils::LogDebug("COLLISIONS", "Player is colliding!\n");
-                    //player.die();
+                    player.die();
                     endGame();
                 }
             }
         }
-
-        
-    
-    } // SCENE GAME
-    else if(current_scene_ == SCENE_END){
-        
     }
+
+    }
+
     
     
 }
@@ -555,6 +559,14 @@ void Game::drawRect(float x, float y, float width, float height) const {
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_id_);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(sizeof(vertices) + sizeof(uv)));
+}
+
+bool Game::gameIsPaused()const{
+    return game_is_paused_;
+}
+
+void Game::setGamePause(bool status){
+    game_is_paused_ = status;
 }
   
 int Game::score(){

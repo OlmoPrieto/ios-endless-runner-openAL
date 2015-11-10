@@ -18,7 +18,7 @@
 class Player : public Object{
 public:
     Player();
-    ~Player(){};
+    ~Player();
   
     void init();
     void update();
@@ -34,7 +34,9 @@ public:
 private:
     bool is_alive_ = true;
     float is_jumping_;
-   
+
+    void* jump_sound;
+    void* die_sound;
     bool played_jump_sound_ = false;
     
 };

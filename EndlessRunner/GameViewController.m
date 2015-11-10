@@ -21,6 +21,7 @@
 @property (strong, nonatomic) UILabel *main_menu_text;
 @property (strong, nonatomic) UILabel *current_score;
 @property (strong, nonatomic) UILabel *best_score;
+@property (strong, nonatomic) UILabel *press_to_continue_text;
 
 
 - (void)setupGL;
@@ -61,6 +62,7 @@
     float scale = [[UIScreen mainScreen] scale];
   
     self.main_menu_text = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 20, 15)];
+    self.press_to_continue_text = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 20, 15)];
     self.score_text = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 20, 15)];
     self.current_score = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 20, 15)];
     self.best_score = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 20, 15)];
@@ -132,19 +134,28 @@
         self.main_menu_text.backgroundColor = [UIColor clearColor];
         [self.view addSubview:self.main_menu_text];
     }else if(current_scene == 1){ // Game
+        if([[self gameWrapper] game_is_paused]){
+            self.press_to_continue_text.text = @"Press anywhere to continue:";
+            self.press_to_continue_text.frame = CGRectMake(90, 50, 400, 100);
+            self.press_to_continue_text.font = [UIFont boldSystemFontOfSize:25.0f];
+            self.press_to_continue_text.textColor = [UIColor whiteColor];
+            self.press_to_continue_text.backgroundColor = [UIColor clearColor];
+            [self.view addSubview:self.press_to_continue_text];
+        }else{
+            // Remove other labels
+            [self.main_menu_text removeFromSuperview];
+            [self.current_score removeFromSuperview];
+            [self.best_score removeFromSuperview];
+            [self.press_to_continue_text removeFromSuperview];
         
-        // Remove other labels
-        [self.main_menu_text removeFromSuperview];
-        [self.current_score removeFromSuperview];
-        [self.best_score removeFromSuperview];
-        
-        // Score
-        self.score_text.text = [NSString stringWithFormat:@"Score:  %d", [[self gameWrapper] score]];
-        self.score_text.frame = CGRectMake(75, 35, 300, 20);
-        self.score_text.font=[UIFont boldSystemFontOfSize:25.0];
-        self.score_text.textColor=[UIColor whiteColor];
-        self.score_text.backgroundColor=[UIColor clearColor];
-        [self.view addSubview:self.score_text];
+            // Score
+            self.score_text.text = [NSString stringWithFormat:@"Score:  %d", [[self gameWrapper] score]];
+            self.score_text.frame = CGRectMake(75, 35, 300, 20);
+            self.score_text.font=[UIFont boldSystemFontOfSize:25.0];
+            self.score_text.textColor=[UIColor whiteColor];
+            self.score_text.backgroundColor=[UIColor clearColor];
+            [self.view addSubview:self.score_text];
+        }
     }else if(current_scene == 2){ // End menu
         [self.score_text removeFromSuperview];
         [self.main_menu_text removeFromSuperview];
@@ -184,6 +195,10 @@
     CGPoint origTouchPos = [touch locationInView: touch.view];
       //unsigned char current_scene = [[self gameWrapper] current_scene];
       //NSLog(@"TOUCH");
+
+      if([[self gameWrapper]game_is_paused]) {
+          [[self gameWrapper]set_game_paused:false];
+      }
       [[self gameWrapper] touchDownAtPosX:origTouchPos.x posY:origTouchPos.y];
       [[self gameWrapper] screenTouched];
   }

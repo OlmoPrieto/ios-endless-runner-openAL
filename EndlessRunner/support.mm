@@ -282,6 +282,7 @@ const char* PathToFileInDocuments(const char* file) {
 
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *path_to_documents = [paths objectAtIndex:0];
+    printf("PATH TO DOCUMENTS: %s", [path_to_documents UTF8String]);
 
     NSString *full_path = [NSString stringWithFormat:@"%@/%@", path_to_documents, _file];
 

@@ -71,6 +71,12 @@
 -(unsigned char)current_scene{
     return ((endlessrunner::Game*)_game)->current_scene();
 }
+-(BOOL)game_is_paused{
+    return ((endlessrunner::Game*)_game)->gameIsPaused();
+}
+-(void)set_game_paused:(bool)status{
+    ((endlessrunner::Game*)_game)->setGamePause(status);
+}
 
 - (void)pause
 {

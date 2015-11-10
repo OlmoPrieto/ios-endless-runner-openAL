@@ -13,9 +13,15 @@ unsigned int Player::texture_id_ = 0;
 Player::Player(){
   init();
 }
+Player::~Player(){
+    support::ReleaseSound(die_sound);
+    support::ReleaseSound(jump_sound);
+}
 
 void Player::init(){
-  is_jumping_ = false;
+    is_jumping_ = false;
+    die_sound = support::LoadSound("player_dead_sound.mp3");
+    jump_sound = support::LoadSound("jump.mp3");
 }
 
 void Player::is_jumping(bool jumping){
@@ -43,7 +49,7 @@ bool Player::alive()const{
 
 void Player::die(){
     is_alive(false);
-    support::PlaySound(support::LoadSound("player_dead_sound.mp3"));
+    support::PlaySound(die_sound);
 }
 
 void Player::update(){
@@ -51,7 +57,7 @@ void Player::update(){
     
     if(jumping()){
         if(!played_jump_sound_){
-            support::PlaySound(support::LoadSound("jump.mp3"));
+            support::PlaySound(jump_sound);
             played_jump_sound_ = true;
         }
         is_grounded(false);

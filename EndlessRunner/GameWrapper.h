@@ -26,6 +26,8 @@
 -(int)score;
 -(int)best_score;
 -(unsigned char)current_scene;
+-(BOOL)game_is_paused;
+-(void)set_game_paused:(bool)status;
 
 - (void)update;
 - (void)render;

@@ -39,7 +39,10 @@ class Game {
   
     int score();
     int best_score();
-    
+
+    bool gameIsPaused()const;
+    void setGamePause(bool status);
+
  private:
 	Game(const Game&);
 	void operator=(const Game&);
@@ -53,7 +56,8 @@ class Game {
     unsigned int max_obstacles_;
     enum Scenes { SCENE_MENU, SCENE_GAME, SCENE_END, SCENES_NUMBER };
     unsigned char current_scene_; // 0 : menu, 1 : game, 2 : end
-    
+
+    bool game_is_paused_;
   
     // Score
     unsigned int hi_score_;
@@ -113,7 +117,7 @@ class Game {
     
     // Game finish
     void endGame();
-  
+
   
 	// methods load shaders
 	bool loadShaders();
