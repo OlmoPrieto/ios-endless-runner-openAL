@@ -221,6 +221,7 @@ void Game::screenTouched(){
 void Game::pause() {
 	is_paused_ = true;
 	utils::LogInfo("EndlessRunner", "Game::pause()");
+    support::PauseMusic(background_music);
     const char *path = support::PathToFileInDocuments("save.txt");
     FILE *f = fopen(path, "w");
     if (f != NULL) {
@@ -258,7 +259,7 @@ void Game::pause() {
 void Game::resume() {
 	//is_paused_ = false;
 	utils::LogInfo("EndlessRunner", "Game::resume()");
-
+    support::PlayMusic(background_music);
     const char *path = support::PathToFileInDocuments("save.txt");
     FILE *f = fopen(path, "r");
     if (f != NULL) {
