@@ -249,6 +249,7 @@
 
 - (void)beginInterruption
 {
+	//[[self gameWrapper] pause]
 	NSLog(@"AVAudioSession begin interruption");
 }
 
@@ -260,7 +261,7 @@
 	if(error) {
 		NSLog(@"WARNING - AVAudioSession error activating: %@", [error localizedDescription]);
 	}
-	
+	//[[self gameWrapper] resume]
 	NSLog(@"AVAudioSession end interruption");
 }
 
