@@ -28,7 +28,9 @@ void* LoadOpenALAudioData(const char* file, ALsizei *out_data_size,
 	
 // Function for save state
 const char* PathToFileInDocuments(const char* file);
-	
+
+struct AudioSource;
+
 // Functions for music
 void* LoadMusic(const char* file);
 void ReleaseMusic(void* music_player);

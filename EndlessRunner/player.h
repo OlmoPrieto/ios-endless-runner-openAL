@@ -12,6 +12,7 @@
 #include <stdio.h>
 
 #include "object.h"
+#include "audio_source.h"
 
 #endif /* player_hpp */
 
@@ -36,7 +37,9 @@ private:
     float is_jumping_;
 
     void* jump_sound;
+    AudioSource jump_sound_;
     void* die_sound;
+    AudioSource die_sound_;
     bool played_jump_sound_ = false;
     
 };

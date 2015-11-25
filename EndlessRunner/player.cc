@@ -11,17 +11,25 @@
 unsigned int Player::texture_id_ = 0;
 
 Player::Player(){
-  init();
+  //init();
 }
 Player::~Player(){
-    support::ReleaseSound(die_sound);
-    support::ReleaseSound(jump_sound);
+    //support::ReleaseSound(die_sound);
+    //support::ReleaseSound(jump_sound);
+
+    die_sound_.destroy();
+    jump_sound_.destroy();
 }
 
 void Player::init(){
     is_jumping_ = false;
-    die_sound = support::LoadSound("player_dead_sound.mp3");
-    jump_sound = support::LoadSound("jump.mp3");
+    //die_sound = support::LoadSound("player_dead_sound.mp3");
+    //jump_sound = support::LoadSound("jump.mp3");
+
+    die_sound_.loadAudio("player_dead_sound.wav");
+    die_sound_.init(x_, y_, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0);
+    jump_sound_.loadAudio("jump.wav");
+    jump_sound_.init(x_, y_, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0);
 }
 
 void Player::is_jumping(bool jumping){
@@ -49,15 +57,17 @@ bool Player::alive()const{
 
 void Player::die(){
     is_alive(false);
-    support::PlaySound(die_sound);
+    //support::PlaySound(die_sound);
+    die_sound_.play();
 }
 
 void Player::update(){
     Object::update();
-    
+
     if(jumping()){
         if(!played_jump_sound_){
-            support::PlaySound(jump_sound);
+            //support::PlaySound(jump_sound);
+            jump_sound_.play();
             played_jump_sound_ = true;
         }
         is_grounded(false);

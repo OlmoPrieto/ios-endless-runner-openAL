@@ -28,12 +28,18 @@ Game::Game()
 	program_handle_(0),
 	attribute_position_(0),
 	uniform_mvp_matrix_(0) {
+
+        device_ = NULL;
+        context_ = NULL;
   utils::LogInfo("EndlessRunner", "Game::Game()");
 }
 
 Game::~Game() {
 	utils::LogInfo("EndlessRunner", "Game::~Game()");
-    support::ReleaseMusic(background_music);
+    //support::ReleaseMusic(background_music);
+    background_music_.destroy();
+    alcDestroyContext(context_);
+    alcCloseDevice(device_);
 }
 
 void Game::setupGL() {
@@ -143,7 +149,15 @@ void Game::initialize(int width, int height) {
     utils::LogInfo("EndlessRunner", "Game::initialize(%d, %d)", width_, height_);
     
     // Main Music
+    device_ = alcOpenDevice(NULL);
+    context_ = alcCreateContext(device_, NULL);
+    alcMakeContextCurrent(context_);
+    printf("Context created!\n");
+
     background_music = support::LoadMusic("bgmusic.mp3");
+    //background_music_.loadAudio("bgmusic.mp3");
+    background_music_.init(width_ / 2, height_ / 2, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1);
+    listener_.init(width_ / 2, height_ / 2, 0.0f, 0.0f, 0.0f, 0.0f);
 
     game_is_paused_ = false;
     
@@ -157,7 +171,9 @@ void Game::initialize(int width, int height) {
                100.0f, 75.0f);
         obstacle_pool_.push_back(o);
     }
-    
+
+    player.init();
+
     restartGameValues();
     
 }
@@ -178,8 +194,10 @@ void Game::restartGameValues(){
     
     floor_one_x_position_ = floor_x_pos_;
     floor_two_x_position_ = floor_one_x_position_ + floor_width_;
-    
-    
+
+    listener_.init(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+
+    //player.init();
     player.set_width(100.0f);
     player.set_height(200.0f);
     player.set_position(100.0f, floor_height_ + player.height() + 100.0f);
@@ -194,6 +212,8 @@ void Game::restartGameValues(){
     
     // Restart music
     support::RestartMusic(background_music);
+    //background_music_.stop();
+    //background_music_.play();
     
     // reset timer
     secs_last_update_ = 0.0;
@@ -221,7 +241,10 @@ void Game::screenTouched(){
 void Game::pause() {
 	is_paused_ = true;
 	utils::LogInfo("EndlessRunner", "Game::pause()");
-    support::PauseMusic(background_music);
+    //support::PauseMusic(background_music);
+    //background_music_.pause();
+    alcDestroyContext(context_);
+    alcCloseDevice(device_);
     const char *path = support::PathToFileInDocuments("save.txt");
     FILE *f = fopen(path, "w");
     if (f != NULL) {
@@ -260,6 +283,12 @@ void Game::resume() {
 	//is_paused_ = false;
 	utils::LogInfo("EndlessRunner", "Game::resume()");
     support::PlayMusic(background_music);
+    if (device_ == NULL) {
+        device_ = alcOpenDevice(NULL);
+        context_ = alcCreateContext(device_, NULL);
+        alcMakeContextCurrent(context_);
+    }
+    //background_music_.play();
     const char *path = support::PathToFileInDocuments("save.txt");
     FILE *f = fopen(path, "r");
     if (f != NULL) {
@@ -342,7 +371,6 @@ void Game::update() {
     
     }else if(current_scene_ == SCENE_GAME){
 
-
         if(!game_is_paused_){
         score_++;
         if (score_ % 300 == 0) {
@@ -352,6 +380,9 @@ void Game::update() {
         if(!support::IsMusicPlaying(background_music)){
             support::PlayMusic(background_music);
         }
+        //if (!background_music_.isPlaying()) {
+        //    background_music_.play();
+        //}
         
         
         // utils::LogInfo("EndlessRunner", "Game update.");

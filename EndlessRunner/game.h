@@ -11,8 +11,11 @@
 
 #include "obstacle.h"
 #include "player.h"
+#include "audio_source.h"
 
 #include <vector>
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
 
 namespace endlessrunner {
     
@@ -93,7 +96,11 @@ class Game {
     void restartGameValues();
     
     // Music
+    ALCdevice *device_;
+    ALCcontext *context_;
     void* background_music;
+    AudioSource background_music_;
+    AudioListener listener_;
     
     // boxes
     std::vector<Obstacle> obstacle_pool_;

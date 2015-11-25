@@ -29,8 +29,14 @@
 		82EBB5151BE642270008F0F6 /* bgmusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 82EBB5141BE642270008F0F6 /* bgmusic.mp3 */; settings = {ASSET_TAGS = (); }; };
 		F58B81DC1BEFD94B0091483B /* goomba.png in Resources */ = {isa = PBXBuildFile; fileRef = F58B81DB1BEFD94B0091483B /* goomba.png */; settings = {ASSET_TAGS = (); }; };
 		F58B81E21BF01BC10091483B /* koopa.png in Resources */ = {isa = PBXBuildFile; fileRef = F58B81E11BF01BC10091483B /* koopa.png */; settings = {ASSET_TAGS = (); }; };
+		F59640A41C053A01006BFA63 /* jump.wav in Resources */ = {isa = PBXBuildFile; fileRef = F59640A31C053A01006BFA63 /* jump.wav */; settings = {ASSET_TAGS = (); }; };
+		F59640A61C05453F006BFA63 /* player_dead_sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = F59640A51C05453F006BFA63 /* player_dead_sound.wav */; settings = {ASSET_TAGS = (); }; };
+		F59640A81C0546FC006BFA63 /* jump_converted.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F59640A71C0546FC006BFA63 /* jump_converted.mp3 */; settings = {ASSET_TAGS = (); }; };
 		F5F6DF641BF2004A00CB66EE /* Documents in Resources */ = {isa = PBXBuildFile; fileRef = F5F6DF631BF2004A00CB66EE /* Documents */; settings = {ASSET_TAGS = (); }; };
 		F5F6DF661BF21E7400CB66EE /* bricks.png in Resources */ = {isa = PBXBuildFile; fileRef = F5F6DF651BF21E7400CB66EE /* bricks.png */; settings = {ASSET_TAGS = (); }; };
+		F5FD1D021C04880700FAB61A /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FD1D011C04880700FAB61A /* OpenAL.framework */; };
+		F5FD1D041C04880E00FAB61A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FD1D031C04880E00FAB61A /* AudioToolbox.framework */; };
+		F5FD1D071C048E8600FAB61A /* audio_source.cc in Sources */ = {isa = PBXBuildFile; fileRef = F5FD1D061C048E8600FAB61A /* audio_source.cc */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,8 +85,15 @@
 		82EBB5141BE642270008F0F6 /* bgmusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bgmusic.mp3; sourceTree = "<group>"; };
 		F58B81DB1BEFD94B0091483B /* goomba.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goomba.png; sourceTree = "<group>"; };
 		F58B81E11BF01BC10091483B /* koopa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = koopa.png; sourceTree = "<group>"; };
+		F59640A31C053A01006BFA63 /* jump.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = jump.wav; sourceTree = "<group>"; };
+		F59640A51C05453F006BFA63 /* player_dead_sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = player_dead_sound.wav; sourceTree = "<group>"; };
+		F59640A71C0546FC006BFA63 /* jump_converted.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = jump_converted.mp3; sourceTree = "<group>"; };
 		F5F6DF631BF2004A00CB66EE /* Documents */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Documents; sourceTree = "<group>"; };
 		F5F6DF651BF21E7400CB66EE /* bricks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bricks.png; sourceTree = "<group>"; };
+		F5FD1D011C04880700FAB61A /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		F5FD1D031C04880E00FAB61A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		F5FD1D051C048E1000FAB61A /* audio_source.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_source.h; sourceTree = "<group>"; };
+		F5FD1D061C048E8600FAB61A /* audio_source.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_source.cc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +101,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5FD1D021C04880700FAB61A /* OpenAL.framework in Frameworks */,
+				F5FD1D041C04880E00FAB61A /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,6 +119,8 @@
 		245C8E7A1BBE6FB10019BDC6 = {
 			isa = PBXGroup;
 			children = (
+				F5FD1D031C04880E00FAB61A /* AudioToolbox.framework */,
+				F5FD1D011C04880700FAB61A /* OpenAL.framework */,
 				245C8E851BBE6FB10019BDC6 /* EndlessRunner */,
 				245C8EA31BBE6FB10019BDC6 /* EndlessRunnerTests */,
 				245C8E841BBE6FB10019BDC6 /* Products */,
@@ -127,7 +144,10 @@
 				F5F6DF651BF21E7400CB66EE /* bricks.png */,
 				F58B81DB1BEFD94B0091483B /* goomba.png */,
 				82E54D7A1BEE65E700F39C11 /* player_dead_sound.mp3 */,
+				F59640A51C05453F006BFA63 /* player_dead_sound.wav */,
 				82E54D781BEE636700F39C11 /* jump.mp3 */,
+				F59640A31C053A01006BFA63 /* jump.wav */,
+				F59640A71C0546FC006BFA63 /* jump_converted.mp3 */,
 				82EBB5141BE642270008F0F6 /* bgmusic.mp3 */,
 				82508F231BE0169800AB3404 /* player_texture.jpg */,
 				8226FDB01BDD749200913384 /* object.cc */,
@@ -155,6 +175,8 @@
 				245C8EB61BBE86B40019BDC6 /* utils.mm */,
 				245C8EB81BBE88AE0019BDC6 /* support.h */,
 				245C8EB91BBE89E20019BDC6 /* support.mm */,
+				F5FD1D051C048E1000FAB61A /* audio_source.h */,
+				F5FD1D061C048E8600FAB61A /* audio_source.cc */,
 			);
 			path = EndlessRunner;
 			sourceTree = "<group>";
@@ -261,12 +283,15 @@
 				F5F6DF661BF21E7400CB66EE /* bricks.png in Resources */,
 				82E54D791BEE636700F39C11 /* jump.mp3 in Resources */,
 				82EBB5151BE642270008F0F6 /* bgmusic.mp3 in Resources */,
+				F59640A81C0546FC006BFA63 /* jump_converted.mp3 in Resources */,
 				245C8E971BBE6FB10019BDC6 /* Assets.xcassets in Resources */,
 				F58B81E21BF01BC10091483B /* koopa.png in Resources */,
 				245C8E9A1BBE6FB10019BDC6 /* LaunchScreen.storyboard in Resources */,
 				82E54D7B1BEE65E700F39C11 /* player_dead_sound.mp3 in Resources */,
 				82508F241BE0169800AB3404 /* player_texture.jpg in Resources */,
+				F59640A41C053A01006BFA63 /* jump.wav in Resources */,
 				F58B81DC1BEFD94B0091483B /* goomba.png in Resources */,
+				F59640A61C05453F006BFA63 /* player_dead_sound.wav in Resources */,
 				245C8E8D1BBE6FB10019BDC6 /* Shader.fsh in Resources */,
 				F5F6DF641BF2004A00CB66EE /* Documents in Resources */,
 			);
@@ -296,6 +321,7 @@
 				245C8EB71BBE86B40019BDC6 /* utils.mm in Sources */,
 				245C8EB41BBE803E0019BDC6 /* game.cc in Sources */,
 				245C8EB01BBE77680019BDC6 /* GameWrapper.mm in Sources */,
+				F5FD1D071C048E8600FAB61A /* audio_source.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
